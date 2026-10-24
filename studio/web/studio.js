@@ -443,7 +443,8 @@
       b.textContent = 'Отменить';
       b.onclick = async () => {
         b.disabled = true;
-        try { await PC.exec('edit.undo'); b.textContent = 'Отменено'; } catch (e) { b.textContent = 'Не вышло'; b.title = e.message; }
+        const steps = typeof undoable === 'number' ? undoable : 1;
+        try { for (let i = 0; i < steps; i++) await PC.exec('edit.undo'); b.textContent = 'Отменено'; } catch (e) { b.textContent = 'Не вышло'; b.title = e.message; }
       };
       d.appendChild(b);
     }
@@ -500,6 +501,7 @@
     const slides = (Array.isArray(list) ? list : []).slice(0, 30);
     if (!slides.length) throw new Error('Пустой список слайдов');
     let added = 0;
+    let steps = 0;
     for (const sl of slides) {
       if (!sl || typeof sl !== 'object') continue;
       const bullets = Array.isArray(sl.bullets) ? sl.bullets.map((b) => String(b).replace(/^\s*[-*•]\s+/, '')) : (typeof sl.bullets === 'string' ? sl.bullets.split('\n') : []);
@@ -507,10 +509,11 @@
       const p = { layout, title: String(sl.title || '') };
       if (bullets.length) p.body = bullets.join('\n');
       await PC.exec('slide.new', p);
-      if (sl.notes) await PC.exec('slide.notes', { text: String(sl.notes) });
+      steps++;
+      if (sl.notes) { await PC.exec('slide.notes', { text: String(sl.notes) }); steps++; }
       added++;
     }
-    return { ok: true, added };
+    return { ok: true, added, steps };
   }
 
   async function runTool(name, args) {
@@ -569,7 +572,7 @@
       case 'add_slides': {
         const d = card(name, args);
         root.classList.add('acting');
-        try { const r = await addSlides(args.slides); cardResult(d, true, '', true); return r; }
+        try { const r = await addSlides(args.slides); cardResult(d, true, '', r.steps || true); delete r.steps; return r; }
         catch (e) { cardResult(d, false, e.message); return { ok: false, error: e.message }; }
         finally { root.classList.remove('acting'); }
       }
@@ -1582,8 +1585,11 @@
 
   async function boot() {
     mount();
-    // Ждём, пока WebAssembly загрузится и поставит window.aipowerpoint.
+    // Ждём, пока WebAssembly загрузится и поставит window.aipowerpoint, а редактор запустится и начнёт отвечать.
     while (!PC.ready()) await sleep(200);
+    for (let i = 0; i < 600; i++) {
+      try { await PC.call('ui.inspect'); break; } catch { await sleep(300); }
+    }
     Files.start();
     // Шрифты — до того, как пользователь откроет презентацию (слайды потом перерисуются и так).
     const fonts = Fonts.start();

@@ -76,7 +76,7 @@ pub fn title_bar(app: &mut SlideApp, ui: &mut Ui) {
         let dirty = app.session.active().is_some_and(|d| d.is_dirty());
         crate::qat::show(app, &mut child);
         let title =
-            app.session.active().map(|d| format!("{}{}", d.title(), if dirty { " — Edited" } else { "" })).unwrap_or_else(|| "AI-PowerPoint".into());
+            app.session.active().map(|d| format!("{}{}", d.title(), if dirty { tl!(" — Edited") } else { "" })).unwrap_or_else(|| "AI-PowerPoint".into());
         ui.painter().text(rect.center(), Align2::CENTER_CENTER, title, theme::font(13.0), t.text);
         // Right side.
         let mut right = ui.new_child(
@@ -104,7 +104,7 @@ pub fn title_bar(app: &mut SlideApp, ui: &mut Ui) {
             app.palette = Some((String::new(), 0));
         }
         let share = right.add(
-            egui::Button::new(egui::RichText::new(tl!("  Present  ")).color(t.accent_text).font(theme::bold(13.0)))
+            egui::Button::new(egui::RichText::new(format!("  {}  ", tl!("Present"))).color(t.accent_text).font(theme::bold(13.0)))
                 .fill(t.accent)
                 .corner_radius(control_h / 2.0)
                 .min_size(vec2(84.0, control_h)),
@@ -2167,11 +2167,7 @@ fn record(app: &mut SlideApp, ui: &mut Ui) {
             }
         }
     });
-    group(ui, |ui| {
-        if big_button(ui, Icon::Help, "Learn\nMore", true).clicked() {
-            app.open_url(deckcraft_engine::links::APP_PAGE);
-        }
-    });
+    // AI-PowerPoint: no "Learn More" link to the upstream's website (the editor works offline).
 }
 
 fn comment_nav(app: &mut SlideApp, ui: &mut Ui, forward: bool) {

@@ -80,7 +80,7 @@ pub fn show(app: &mut SlideApp, ctx: &egui::Context) {
     let Some(mut d) = app.dialog.take() else { return };
     let mut open = true;
     let mut close = false;
-    let mut window = egui::Window::new(title(&d.id))
+    let mut window = egui::Window::new(tl!(title(&d.id)))
         .id(egui::Id::new(("dialog", d.id.clone())))
         .collapsible(false)
         .resizable(false)
@@ -2755,7 +2755,7 @@ pub fn paint_logo(p: &egui::Painter, r: Rect) {
 /// The selection's proofing language and whether it's marked Do Not Check Spelling: the run at
 /// the caret, else the first run of the first selected shape; US English when none says.
 pub fn selected_language(app: &SlideApp) -> (String, bool) {
-    let Some(st) = app.session.active() else { return ("en-US".into(), false) };
+    let Some(st) = app.session.active() else { return (crate::i18n::default_language().into(), false) };
     let run = |sh: &deckcraft_model::Shape, at: Option<(usize, usize)>| -> Option<deckcraft_model::RunProps> {
         let t = sh.text.as_ref()?;
         if let Some((p, c)) = at {
@@ -2776,7 +2776,7 @@ pub fn selected_language(app: &SlideApp) -> (String, bool) {
         _ => st.selection.shapes.first().and_then(|id| st.shape(*id)).and_then(|sh| run(sh, None)),
     };
     let props = props.unwrap_or_default();
-    (props.lang.unwrap_or_else(|| "en-US".into()), props.no_proof == Some(true))
+    (props.lang.unwrap_or_else(|| crate::i18n::default_language().into()), props.no_proof == Some(true))
 }
 
 fn seed_once(d: &mut Dialog, key: &str, val: String) {

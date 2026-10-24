@@ -25,6 +25,12 @@ pub fn set_russian(on: bool) {
     deckcraft_model::set_russian_prompts(on);
 }
 
+/// The language text without its own proofing language is taken to be in: Russian with the
+/// Russian interface, else US English (DeckCraft's default).
+pub fn default_language() -> &'static str {
+    if russian() { "ru-RU" } else { "en-US" }
+}
+
 /// Whether the interface is in Russian.
 pub fn russian() -> bool {
     RUSSIAN.load(Ordering::Relaxed)

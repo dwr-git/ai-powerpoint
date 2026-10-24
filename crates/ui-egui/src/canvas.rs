@@ -571,7 +571,9 @@ fn ai_chip(app: &mut SlideApp, ui: &mut Ui, xf: Xf, viewport: Rect) {
         return;
     }
     let t = Tokens::get(ui.ctx());
-    let resp = ui.interact(chip, ui.id().with("ai_chip"), Sense::click());
+    // Sensing drags too makes the chip the pointer's only target there: the slide under it must
+    // not take the press (it would deselect, and the chip would vanish before its click).
+    let resp = ui.interact(chip, ui.id().with("ai_chip"), Sense::click_and_drag());
     let resp = resp.on_hover_text(tl!("AI Assistant: improve, shorten, translate, speaker notes")).on_hover_cursor(egui::CursorIcon::PointingHand);
     resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, true, tl!("AI Assistant")));
     let painter = ui.painter().with_clip_rect(viewport);
