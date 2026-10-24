@@ -4,7 +4,11 @@ use deckcraft_engine::Session;
 use deckcraft_ui_egui::{Inbox, InboxEvent, InboxFile, Services, SlideApp};
 use wasm_bindgen::JsCast as _;
 
-const PRESENTATION_EXTS: &[&str] = &["deckcraft", "pptx", "potx", "ppsx", "txt", "md"];
+mod bridge;
+
+const PRESENTATION_EXTS: &[&str] = &["pptx", "potx", "ppsx", "deckcraft", "txt", "md"];
+/// Where the page remembers the interface theme chosen in this browser.
+const THEME_KEY: &str = "ai-powerpoint.theme";
 const PICTURE_EXTS: &[&str] = &["png", "jpg", "jpeg", "gif", "webp", "bmp", "tif", "tiff"];
 const AUDIO_EXTS: &[&str] = &["wav", "mp3", "m4a", "aac", "flac", "ogg", "opus", "aif", "aiff"];
 const VIDEO_EXTS: &[&str] = &["mp4", "m4v", "mov", "webm"];
@@ -13,6 +17,10 @@ const LOADING_ID: &str = "deckcraft_loading";
 
 pub fn start() {
     eframe::WebLogger::init(log::LevelFilter::Info).ok();
+    // The page's assistant panel and server files (`window.aipowerpoint`).
+    if let Err(e) = bridge::install() {
+        log::error!("couldn't install window.aipowerpoint: {e:?}");
+    }
     wasm_bindgen_futures::spawn_local(async {
         let Some(document) = web_sys::window().and_then(|w| w.document()) else {
             log::error!("no document");
@@ -37,9 +45,16 @@ pub fn start() {
                         log::info!("deckcraft-web {}: wgpu backend {:?}", env!("CARGO_PKG_VERSION"), rs.adapter.get_info().backend);
                     }
                     let inbox: Inbox = Inbox::default();
-                    let mut app = SlideApp::new(Session::new(), services(inbox.clone(), cc.egui_ctx.clone()));
+                    let (requests, control) = std::sync::mpsc::channel();
+                    bridge::connect(requests, cc.egui_ctx.clone());
+                    let mut app = SlideApp::new(Session::new(), services(inbox.clone(), cc.egui_ctx.clone())).with_control(control);
+                    // AI-PowerPoint: the Russian interface and the Brand theme (Light and Dark stay in
+                    // File › Account and the assistant panel's theme menu; the choice is remembered).
+                    deckcraft_ui_egui::i18n::set_russian(!query().contains("lang=en"));
+                    app.ui.brightness = stored_theme().unwrap_or(deckcraft_ui_egui::theme::Brightness::Brand);
                     let q = query();
-                    if !q.contains("blank") {
+                    // A new blank presentation opens at once (`?sample` shows the sample deck instead).
+                    if q.contains("sample") {
                         if let Err(e) = deckcraft_engine::sample::open_sample(&mut app.session) {
                             log::error!("sample deck: {e}");
                         }
@@ -49,14 +64,18 @@ pub fn start() {
                     if q.contains("show") {
                         app.start_show(0, false);
                     }
-                    Ok(Box::new(WebShell { app, inbox }))
+                    let theme = app.ui.brightness;
+                    Ok(Box::new(WebShell { app, inbox, theme }))
                 }),
             )
             .await;
         if let Some(el) = document.get_element_by_id(LOADING_ID) {
             match result {
                 Ok(()) => el.remove(),
-                Err(e) => el.set_inner_html(&format!("<p>DeckCraft failed to start: {e:?}</p><p>A browser with WebGPU or WebGL2 is required.</p>")),
+                Err(e) => el.set_inner_html(&format!(
+                    "<p>AI-PowerPoint не запустился: {}</p><p>Нужен браузер с WebGPU или WebGL2: свежий Chrome, Edge, Firefox или Safari.</p>",
+                    format!("{e:?}").replace('&', "&amp;").replace('<', "&lt;")
+                )),
             }
         }
     });
@@ -71,6 +90,8 @@ fn query() -> String {
 struct WebShell {
     app: SlideApp,
     inbox: Inbox,
+    /// The theme last stored in this browser.
+    theme: deckcraft_ui_egui::theme::Brightness,
 }
 
 impl eframe::App for WebShell {
@@ -98,6 +119,12 @@ impl eframe::App for WebShell {
             });
         }
         self.app.logic(ctx);
+        bridge::poll_replies();
+        bridge::dirty(self.app.session.documents().iter().any(|d| d.is_dirty()));
+        if self.app.ui.brightness != self.theme {
+            self.theme = self.app.ui.brightness;
+            store_theme(self.theme);
+        }
     }
 
     fn raw_input_hook(&mut self, _ctx: &egui::Context, raw: &mut egui::RawInput) {
@@ -113,6 +140,7 @@ impl eframe::App for WebShell {
 /// back to `open_async` (browser picker → inbox) and `download`.
 fn services(inbox: Inbox, ctx: egui::Context) -> Services {
     let open_inbox = inbox.clone();
+    let ai_ctx = ctx.clone();
     Services {
         open_async: Some(Box::new(move |purpose: &str, request: u64| {
             let inbox = open_inbox.clone();
@@ -141,7 +169,50 @@ fn services(inbox: Inbox, ctx: egui::Context) -> Services {
             }
         })),
         inbox: Some(inbox),
+        // Save and Save As hand the presentation to the page (the user's files on the server).
+        save_to_page: Some(Box::new(bridge::save_to_page)),
+        // The title bar's way back to the site (studio/config.js: homeUrl).
+        go_home: Some(Box::new(go_home)),
+        // The AI chip and the slide's context menu open the page's AI menu (CSS pixels).
+        ai_assist: Some(Box::new(move |x: f32, y: f32| {
+            let zoom = ai_ctx.zoom_factor();
+            let k = if zoom.is_finite() && zoom > 0.0 { zoom } else { 1.0 };
+            bridge::ai_menu(x * k, y * k);
+        })),
         ..Default::default()
+    }
+}
+
+/// Leave the editor for the site it lives on: `window.STUDIO_CONFIG.homeUrl` (studio/config.js,
+/// made absolute by the panel), one level up without it.
+fn go_home() {
+    let Some(window) = web_sys::window() else { return };
+    let url = js_sys::Reflect::get(&window, &"STUDIO_CONFIG".into())
+        .ok()
+        .filter(|c| c.is_object())
+        .and_then(|c| js_sys::Reflect::get(&c, &"homeUrl".into()).ok())
+        .and_then(|u| u.as_string())
+        .filter(|u| !u.trim().is_empty())
+        .unwrap_or_else(|| "../".to_string());
+    if let Err(e) = window.location().set_href(&url) {
+        log::error!("couldn't go to {url}: {e:?}");
+    }
+}
+
+fn local_storage() -> Option<web_sys::Storage> {
+    web_sys::window().and_then(|w| w.local_storage().ok().flatten())
+}
+
+/// The theme chosen earlier in this browser, if any.
+fn stored_theme() -> Option<deckcraft_ui_egui::theme::Brightness> {
+    let v = local_storage()?.get_item(THEME_KEY).ok().flatten()?;
+    deckcraft_ui_egui::theme::Brightness::from_code(&v)
+}
+
+fn store_theme(b: deckcraft_ui_egui::theme::Brightness) {
+    if let Some(s) = local_storage() {
+        // A blocked storage only means the choice isn't remembered.
+        let _ = s.set_item(THEME_KEY, b.code());
     }
 }
 
@@ -152,7 +223,7 @@ fn push_inbox(inbox: &Inbox, event: InboxEvent) {
 /// Trigger a browser download of `bytes` named after the last component of `path`.
 fn download(path: &str, bytes: &[u8]) -> Result<(), String> {
     let js = |e: wasm_bindgen::JsValue| format!("{e:?}");
-    let name = std::path::Path::new(path).file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| "deckcraft".into());
+    let name = std::path::Path::new(path).file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_else(|| "presentation".into());
     let window = web_sys::window().ok_or("no window")?;
     let document = window.document().ok_or("no document")?;
     let parts = js_sys::Array::of1(&js_sys::Uint8Array::from(bytes));

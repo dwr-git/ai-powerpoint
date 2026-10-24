@@ -4724,3 +4724,32 @@ fn slide_hide_and_layout_reject_invalid_index() {
     }
     assert!(s.doc().unwrap().doc.slides.iter().all(|x| !x.hidden));
 }
+
+/// AI-PowerPoint's AI menu reads the selected text, else the selected shapes', else the slide's,
+/// and the whole presentation as plain text for context.
+#[test]
+fn selected_text_and_presentation_text_for_the_ai_menu() {
+    let mut s = session();
+    let title = s.doc().unwrap().current_slide().unwrap().shapes[0].id.0;
+    s.execute("text.edit", &json!({"id": title})).unwrap();
+    s.execute("text.insert", &json!({"text": "Итоги года\nвторая строка"})).unwrap();
+    s.execute("text.select", &json!({"anchor": [0, 6], "caret": [1, 6]})).unwrap();
+    let sel = s.execute("text.selection", &json!({})).unwrap();
+    assert_eq!(sel["scope"], "range");
+    assert_eq!(sel["text"], "года\nвторая");
+    s.execute("text.select", &json!({"anchor": [1, 6], "caret": [0, 6]})).unwrap();
+    assert_eq!(s.execute("text.selection", &json!({})).unwrap()["text"], "года\nвторая", "backwards selections read the same");
+    s.execute("text.exit", &json!({})).unwrap();
+    s.execute("edit.deselect", &json!({})).unwrap();
+    let slide = s.execute("text.selection", &json!({})).unwrap();
+    assert_eq!(slide["scope"], "slide");
+    assert!(slide["text"].as_str().unwrap().contains("Итоги года"));
+    s.execute("slide.new", &json!({"layout": "titleAndContent", "title": "План", "body": "Первый пункт"})).unwrap();
+    s.execute("slide.notes", &json!({"text": "Сказать о сроках"})).unwrap();
+    let all = s.execute("document.text", &json!({})).unwrap();
+    let text = all["text"].as_str().unwrap();
+    assert!(text.contains("Slide 1: Итоги года") && text.contains("Slide 2: План"), "{text}");
+    assert!(text.contains("Первый пункт") && text.contains("Notes: Сказать о сроках"), "{text}");
+    // Junk parameters never panic.
+    assert!(s.execute("document.text", &json!({"maxChars": -5})).is_ok());
+}

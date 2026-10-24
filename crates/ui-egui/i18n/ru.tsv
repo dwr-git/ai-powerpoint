@@ -1,0 +1,1417 @@
+# Русский (ru) interface catalog for AI-PowerPoint (crates/ui-egui/src/i18n.rs).
+# Columns, separated by a TAB:  English source text <TAB> translation. Escapes: \n \t \\.
+# `{name}` placeholders appear in both columns; a trailing "…" in one needs one in the other.
+#
+# Rows whose English matches a row of storytold/craft-i18n (locales/ru, rev 04600cb, MIT OR
+# Apache-2.0, same authors' project) were taken from it; the others were written for AI-PowerPoint
+# from the plain meaning of the English text. No other product's localisation was consulted.
+ (not checked)	 (не проверяется)
+(missing)	(отсутствует)
+(no spelling suggestions)	(нет вариантов написания)
+(none)	(нет)
++ Add	+ Добавить
++ New Comment	+ Новый комментарий
++ New Slide	+ Новый слайд
++ Row	+ Строка
++ Series	+ Ряд
++Bin	+двоич.
++LOC	+строк
+1 picture	1 рисунок
+1 picture with title	1 рисунок с заголовком
+1.5 lines	1,5 строки
+2 pictures	2 рисунка
+2 pictures with title	2 рисунка с заголовком
+3-D Format	Формат объёмной фигуры
+3-D Rotation	Поворот объёмной фигуры
+3d	3D
+4 pictures	4 рисунка
+4 pictures with title	4 рисунка с заголовком
+A fixed copy that keeps its layout on any device	Неизменяемая копия, которая выглядит одинаково на любом устройстве
+A photo album holds at most 48 pictures or text boxes	В фотоальбоме может быть не больше 48 рисунков или надписей
+AI	ИИ
+AI Assistant	ИИ-помощник
+AI Assistant: improve, shorten, translate, speaker notes	ИИ-помощник: улучшить, сократить, перевести, заметки докладчика
+AI Assistant…	ИИ-помощник…
+AI-PowerPoint can't export “{other}”	AI-PowerPoint не умеет экспортировать «{other}»
+AI-PowerPoint can't find “{text}”.	AI-PowerPoint не нашёл «{text}».
+AI-PowerPoint has no accounts of its own: your presentations stay in your files.	У AI-PowerPoint нет своих учётных записей: презентации хранятся в ваших файлах.
+AI-PowerPoint prints through a PDF: it downloads, ready to print from your browser or PDF viewer.	AI-PowerPoint печатает через PDF: файл скачивается, и его можно напечатать из браузера или программы просмотра PDF.
+AI-PowerPoint prints through a PDF: it opens in your PDF viewer, where you choose the printer.	AI-PowerPoint печатает через PDF: файл откроется в программе просмотра PDF, там и выбирается принтер.
+ALL pictures black and white	ВСЕ рисунки чёрно-белые
+AaBbCcDd	АаБбВвГг
+Abc	Абв
+About	О программе
+About AI-PowerPoint	О программе AI-PowerPoint
+Accent 1	Акцент 1
+Accent 2	Акцент 2
+Accent 3	Акцент 3
+Accent 4	Акцент 4
+Accent 5	Акцент 5
+Accent 6	Акцент 6
+Accept	Принять
+Accept All	Принять все
+Accept Revision	Принять исправление
+Accessibility	Специальные возможности
+Accessibility Checker	Проверка доступности
+Account	Учётная запись
+Action	Операция
+Action Button: {k}	Управляющая кнопка: {k}
+Action Buttons	Управляющие кнопки
+Action Settings	Настройка действия
+Action on click	Действие по щелчку
+Action on mouse over	Действие при наведении
+Add	Добавить
+Add Animation	Добавить анимацию
+Add Assistant	Добавить помощника
+Add Font	Добавить шрифт
+Add Guide	Добавить направляющую
+Add Horizontal Guide	Добавить горизонтальную направляющую
+Add Pictures…	Добавить рисунки…
+Add Point	Добавить узел
+Add Section	Добавить раздел
+Add Shape	Добавить фигуру
+Add Shape Above	Добавить фигуру выше
+Add Shape After	Добавить фигуру после
+Add Shape Before	Добавить фигуру перед
+Add Shape Below	Добавить фигуру ниже
+Add Vertical Guide	Добавить вертикальную направляющую
+Add a category	Добавьте категорию
+Add a picture or a text box first	Сначала добавьте рисунок или надпись
+Add a tag	Добавьте тег
+Add a title	Добавьте название
+Add a title with a picture or some text to get layout ideas.	Добавьте заголовок и рисунок или текст, чтобы получить идеи оформления.
+Add an author	Добавьте автора
+Add comments	Добавить комментарии
+Add to Dictionary	Добавить в словарь
+Add to Quick Access Toolbar	Добавить на панель быстрого доступа
+Address:	Адрес:
+Adjust	Настройка
+Adjust Shape	Изменить фигуру
+Advanced Animation	Расширенная анимация
+After Previous	После предыдущего
+After text	После текста
+After:	После:
+Album theme	Тема альбома
+Align	Выровнять
+Align Bottom	По нижнему краю
+Align Cell Text	Выравнивание текста в ячейке
+Align Center	По центру
+Align Left	По левому краю
+Align Middle	По середине
+Align Right	По правому краю
+Align Selected Objects	Выровнять выделенные объекты
+Align Text	Выравнивание текста
+Align Top	По верхнему краю
+Align or Distribute	Выровнять или распределить
+Align text to the {l} of the cell	Выровнять текст в ячейке: {l}
+Align to Slide	Выровнять относительно слайда
+Alignment	Выравнивание
+Alignment:	Выравнивание:
+All	Все
+All Borders	Все границы
+All caps	Все прописные
+All slides	Все слайды
+All slides on	Все слайды на
+Alt\nText	Замещающий\nтекст
+Alt Text	Замещающий текст
+An open-source, clean-room project. Not affiliated with Microsoft.	Открытый проект, написанный с нуля. Не связан с Microsoft.
+Angle	Угол
+Animated GIF (.gif)	Анимированный GIF (.gif)
+Animation	Анимация
+Animation Gallery	Коллекция анимаций
+Animation Painter	Анимация по образцу
+Animation Painter (double-click to keep it on)	Анимация по образцу (двойной щелчок — оставить включённой)
+Animation Pane	Область анимации
+Animation Styles	Стили анимации
+Animations	Анимация
+Animations on Slide	Анимация на слайде
+Appearance	Оформление
+Applies to this presentation's theme colours.	Применяется к цветам темы этой презентации.
+Apply	Применить
+Apply\nTo All	Применить ко всем
+Apply Animation	Применить анимацию
+Apply Design Idea	Применить идею оформления
+Apply To All	Применить ко всем
+Apply to All	Применить ко всем
+Arrange	Упорядочить
+Arrow	Стрелка
+Arrow at end	Стрелка в конце
+Arrow at start	Стрелка в начале
+Arrows	Стрелки
+Arrows at both ends	Стрелки с обоих концов
+Artistic\nEffects	Художественные эффекты
+Artistic Effects	Художественные эффекты
+As One Object	Как один объект
+As:	Как:
+At	На
+Audio	Аудио
+Audio from File…	Звук из файла…
+Author	Автор
+AutoCorrect	Автозамена
+AutoCorrect Options	Параметры автозамены
+AutoCorrect Options…	Параметры автозамены…
+AutoCorrect as you type	Автозамена при вводе
+Autofit	Автоподбор
+Automatic	Автоматически
+Available formats:	Доступные форматы:
+Back	Назад
+Back (Esc)	Назад (Esc)
+Background	Фон
+Background Styles	Стили фона
+Backspace	Backspace
+Banded Columns	Чередующиеся столбцы
+Banded Rows	Чередующиеся строки
+Based on DeckCraft by the ArtCraft team (github.com/storytold/slidecraft)	Основан на DeckCraft от команды ArtCraft (github.com/storytold/slidecraft)
+Baseline	Базовая линия
+Basic Cycle	Простой цикл
+Basic List	Простой список
+Basic Process	Простой процесс
+Before text	Перед текстом
+Before you share it, check the presentation for things people with disabilities might find hard to read.	Перед тем как поделиться презентацией, проверьте, нет ли в ней того, что трудно воспринять людям с ограниченными возможностями.
+Begin arrow	Начало стрелки
+Begin size	Размер начала
+Bevel	Скос
+Binary assets added	Добавлены двоичные ресурсы
+Binary assets removed	Удалённые бинарные ресурсы
+Black	Чёрный
+Black Pen	Чёрное перо
+Black on	Чёрный на
+Blank Presentation	Пустая презентация
+Blue Pen	Синее перо
+Blur	Размытие
+Body	Основной текст
+Body font	Шрифт основного текста
+Body sample  {minor}	Образец текста  {minor}
+Body:	Основной текст:
+Bold	Полужирный
+Borders	Границы
+Both	Оба
+Bottom	Снизу
+Bottom Border	Нижняя граница
+Bottom Left	Снизу слева
+Bottom Right	Снизу справа
+Bottom bevel	Нижний рельеф
+Bottom left	Снизу слева
+Bottom right	Снизу справа
+Brand	Фирменная
+Brightness	Яркость
+Bring\nForward	Переместить вперёд
+Bring Forward	Переместить вперёд
+Bring to Front	На передний план
+Browse	Обзор
+Browse for Themes needs the desktop app for now	Поиск тем пока работает только в настольной версии
+Browse for Themes…	Поиск тем…
+Browsed at a kiosk (full screen)	Автоматический показ (во весь экран)
+Browsed by an individual (window)	Управляемый пользователем (в окне)
+Bulleted	Маркированный
+Bullets	Маркеры
+Bullets and Numbering	Маркеры и нумерация
+Bullets and Numbering…	Маркеры и нумерация…
+By	На
+By Paragraph	По абзацам
+Cameo	Камея
+Camera capture is not available yet	Съёмка с камеры пока недоступна
+Cancel	Отмена
+Cap type	Тип окончания
+Capitalize Each Word	Каждое Слово С Прописной
+Capitalize first letter of sentences	Делать первые буквы предложений прописными
+Capitalize names of days	Названия дней с прописной буквы
+Caps	Концы
+Captions under pictures	Подписи под рисунками
+Categories	Категории
+Cell Margins	Поля ячеек
+Cell Size	Размер ячейки
+Center	По центру
+Center Tab	Табуляция по центру
+Centered	По центру
+Change\nChart Type	Изменить\nтип диаграммы
+Change Case	Изменить регистр
+Change Chart Type	Изменить тип диаграммы
+Change Colors	Изменить цвета
+Change File Type	Изменить тип файла
+Change Layout	Изменить макет
+Change Picture	Заменить рисунок
+Change Picture…	Заменить рисунок…
+Change Shape	Изменить фигуру
+Change Spelling	Исправить написание
+Change to:	Изменить на:
+Character Spacing	Межзнаковый интервал
+Character spacing must be a number	Межзнаковый интервал должен быть числом
+Chart	Диаграмма
+Chart Data	Данные диаграммы
+Chart Design	Конструктор диаграмм
+Chart Elements	Элементы диаграммы
+Chart Layouts	Макеты диаграмм
+Chart…	Диаграмма…
+Check\nAccessibility	Проверить\nдоступность
+Check Accessibility	Проверить доступность
+Check for Issues	Поиск проблем
+Choose a SmartArt Graphic	Выбор рисунка SmartArt
+Choose a body font.	Выберите шрифт основного текста.
+Choose a font	Выберите шрифт
+Choose a heading font.	Выберите шрифт заголовков.
+Choose where to save	Выберите, куда сохранить
+Choosing a presentation to reuse needs the desktop app	Выбор презентации для повторного использования работает только в настольной версии
+Choosing a sound file needs the desktop app	Выбор звукового файла работает только в настольной версии
+Clear	Очистить
+Clear All	Очистить всё
+Clear All Formatting	Очистить всё форматирование
+Click a colour in the picture to make it transparent	Щёлкните цвет на рисунке, чтобы сделать его прозрачным
+Click a symbol to insert it at the insertion point.	Щёлкните символ, чтобы вставить его в место курсора.
+Click the slide to take the colour under the pointer	Щёлкните слайд, чтобы взять цвет под указателем
+Click the slide to zoom in. Esc cancels.	Щёлкните слайд, чтобы увеличить его. Esc — отмена.
+Click to add first slide	Щёлкните, чтобы добавить первый слайд
+Click to add notes	Заметки к слайду
+Click to add text	Щёлкните, чтобы добавить текст
+Click to change this one; Shift-click to change all	Щелчок — изменить этот; Shift+щелчок — изменить все
+Clipboard	Буфер обмена
+Close	Закрыть
+Close Master View	Закрыть режим образца
+Close Path	Замкнуть контур
+Collapse	Свернуть
+Collapse the Ribbon	Свернуть ленту
+Color	Цвет
+Color At	Цвет в точке
+Color:	Цвет:
+Colors	Цвета
+Columns	Столбцы
+Command Palette	Палитра команд
+Comment	Комментарий
+Comments	Комментарии
+Commit Composition	Завершить ввод
+Commits	Коммиты
+Community Links	Ссылки сообщества
+Company	Организация
+Compare	Сравнить
+Compare needs the desktop app for now	Сравнение пока работает только в настольной версии
+Compare this presentation with a revised copy from Review › Compare.	Сравните эту презентацию с исправленной копией: Рецензирование › Сравнить.
+Compare…	Сравнить…
+Compound type	Составной тип
+Compress Pictures	Сжать рисунки
+Connect Shapes	Соединить фигуры
+Connection Sites	Точки соединения
+Content	Содержимое
+Contour	Контур
+Contrast	Контраст
+Contributors	Участники
+Convert	Преобразовать
+Convert to Shapes	Преобразовать в фигуры
+Convert to SmartArt	Преобразовать в SmartArt
+Convert to Text	Преобразовать в текст
+Copied the path	Путь скопирован
+Copy	Копировать
+Copy path	Копировать путь
+Corner Point	Угловой узел
+Correct TWo INitial CApitals	Исправлять ДВе ПРописные буквы в начале слова
+Correct accidental use of cAPS LOCK key	Исправлять последствия случайного нажатия cAPS LOCK
+Corrections	Коррекция
+Couldn't save AutoRecover information: {e}	Не удалось сохранить данные автовосстановления: {e}
+Couldn't save {name}: {error}	Не удалось сохранить {name}: {error}
+Create	Создать
+Create Graphic	Создать графический элемент
+Create Handouts	Создать выдачи
+Create New Theme Colors	Новые цвета темы
+Create New Theme Fonts	Новые шрифты темы
+Create PDF	Создать PDF
+Create PDF Document	Создать документ PDF
+Create a PDF Document	Создание документа PDF
+Crop	Обрезать
+Crop 10% each side	Обрезать по 10% с каждой стороны
+Crop 20% each side	Обрезать по 20% с каждой стороны
+Crop to Shape	Обрезать по фигуре
+Currency	Денежный
+Curved Segment	Кривой сегмент
+Custom	Другая
+Custom Range	Свой диапазон
+Custom Show	Произвольный показ
+Custom Show 1	Произвольный показ 1
+Custom Shows	Произвольные показы
+Custom Show…	Произвольный показ…
+Custom Slide Show	Произвольный показ слайдов
+Custom character:	Свой символ:
+Custom width	Своя ширина
+Customize	Настроить
+Customize Colors…	Настроить цвета…
+Customize Fonts…	Настроить шрифты…
+Customize Quick Access Toolbar	Настроить панель быстрого доступа
+Cut	Вырезать
+Cycle	Цикл
+Dark	Тёмная
+Dark\nMode	Тёмный режим
+Dark Mode	Тёмный режим
+Dark appearance	Тёмное оформление
+Dash	Штрих
+Dash Dot	Штрихпунктир
+Dashes	Штрихи
+Data	Данные
+Date	Дата
+Date &\nTime	Дата и время
+Date & Time	Дата и время
+Date and Time	Дата и время
+Date and time	Дата и время
+Decimal	По разделителю
+Decimal Tab	Табуляция по разделителю
+DeckCraft Presentation (*.deckcraft)	Презентация DeckCraft (*.deckcraft)
+DeckCraft's own format: everything is kept	Собственный формат DeckCraft: сохраняется всё
+Decrease Font Size	Уменьшить размер шрифта
+Decrease List Level	Понизить уровень списка
+Default tab stops (in):	Позиции табуляции по умолчанию (дюймы):
+Delay:	Задержка:
+Delete	Удалить
+Delete Columns	Удалить столбцы
+Delete Comment	Удалить комментарий
+Delete Guide	Удалить направляющую
+Delete Layout	Удалить лист
+Delete Point	Удалить точку
+Delete Repeated Word	Удалить повторное слово
+Delete Rows	Удалить строки
+Delete Slide	Удалить слайд
+Delete Table	Удалить таблицу
+Delete Text	Удалить текст
+Demote	Понизить уровень
+Depth	Глубина
+Deselect	Отменить выделение
+Design	Дизайн
+Design Ideas	Идеи оформления
+Designer	Конструктор
+Diagonal Down Border	Диагональная граница сверху вниз
+Diagonal Up Border	Диагональная граница снизу вверх
+Diamond	Ромб
+Direction	Направление
+Discard Recovered Presentations	Удалить восстановленные презентации
+Display	Отображение
+Display drawing guides on screen	Показывать направляющие на экране
+Display grid on screen	Показывать сетку на экране
+Display name	Отображаемое имя
+Distance	Расстояние
+Distance from ground	Расстояние от земли
+Distribute	Распределить
+Distribute Columns	Выровнять ширину столбцов
+Distribute Horizontally	Распределить по горизонтали
+Distribute Rows	Выровнять высоту строк
+Distribute Vertically	Распределить по вертикали
+Distributed	Распределённое
+Do not Autofit	Не выполнять автоподбор
+Do not check spelling or grammar	Не проверять орфографию и грамматику
+Do you want to save the changes you made to {what}?	Сохранить изменения в «{what}»?
+Do you want to save the changes you made to “{name}”?	Сохранить изменения, внесённые в «{name}»?
+Don't Save	Не сохранять
+Don't show on title slide	Не показывать на титульном слайде
+Done	Готово
+Dot	Точка
+Dotted	Пунктирная
+Double	Двойной
+Down	Вниз
+Download	Скачать
+Download the file	Скачать файл
+Draw	Рисование
+Draw Borders	Нарисовать границы
+Draw Table	Нарисовать таблицу
+Drawing	Рисование
+Duplicate	Дублировать
+Duplicate Selected Slides	Дублировать выделенные слайды
+Duplicate Slide	Дублировать слайд
+Duration:	Длительность:
+Dynamic Content	Динамическое содержимое
+Edit	Редактирование
+Edit\nData	Изменить\nданные
+Edit Alt Text…	Изменить замещающий текст…
+Edit Data	Изменить данные
+Edit Header & Footer	Изменить колонтитулы
+Edit Master	Изменить образец
+Edit Photo Album…	Изменить фотоальбом…
+Edit Points	Начать изменение узлов
+Edit Shape	Изменить фигуру
+Edit SmartArt Text	Изменить текст SmartArt
+Edit Text	Редактировать текст
+Edit the data: first row = series names, first column = categories.	Измените данные: первая строка — имена рядов, первый столбец — категории.
+Editing	Редактирование
+Effect\nOptions	Параметры эффекта
+Effect Options	Параметры эффекта
+Effects	Эффекты
+Email Address	Адрес электронной почты
+Email address:	Адрес эл. почты:
+Emphasis	Выделение
+End	End
+End Review	Закончить рецензирование
+End Show	Завершить показ
+End arrow	Конец стрелки
+End of slide show	Конец показа слайдов
+End of slide show, click to exit.	Конец показа слайдов. Щёлкните, чтобы выйти.
+End size	Размер конца
+End trim (s):	Обрезка в конце (с):
+English (Australia)	Английский (Австралия)
+English (Canada)	Английский (Канада)
+English (United Kingdom)	Английский (Великобритания)
+English (United States)	Английский (США)
+Enter	Enter
+Enter a scheme name.	Введите имя набора.
+Enter a zoom percent	Введите масштаб в процентах
+Entrance	Вход
+Equation	Уравнение
+Eraser	Ластик
+Exactly	Точно
+Exciting	Сложные
+Exit	Выйти
+Exit Edit Points	Закончить изменение узлов
+Expand	Развернуть
+Export	Экспорт
+Export the presentation as:	Экспортировать презентацию как:
+Exported {path}	Экспортировано: {path}
+Export…	Экспортировать…
+Extra Large (1920 px wide)	Очень большой (ширина 1920 пикс.)
+Eyedropper	Пипетка
+Eyedropper: click the slide (Esc cancels)	Пипетка: щёлкните слайд (Esc — отмена)
+Fade in (s):	Появление (с):
+Fade out (s):	Исчезание (с):
+File	Файл
+Fill	Заливка
+Fill & Line	Заливка и граница
+Find	Найти
+Find Next	Найти далее
+Find and Replace	Найти и заменить
+Find what:	Найти:
+Find whole words only	Только слово целиком
+Find…	Найти…
+First	Первый
+First Column	Первый столбец
+First Slide	Первый слайд
+First commit	Первый коммит
+First line	Первая строка
+Fit	По размеру
+Fit slide to current window	Вписать слайд в текущее окно
+Fit to Window	По размеру окна
+Fit to slide	По размеру слайда
+Flat	Плоский
+Flip	Отразить
+Flip Horizontal	Отразить слева направо
+Flip Vertical	Отразить сверху вниз
+Follow Path	Следовать по пути
+Follow the layout	Как в макете
+Font	Шрифт
+Font Color	Цвет шрифта
+Font Size	Размер шрифта
+Font name	Шрифт
+Font size must be a number	Размер шрифта должен быть числом
+Fonts	Шрифты
+Fonts in Presentation	Шрифты в презентации
+Font…	Шрифт…
+Footer	Нижний колонтитул
+Footers	Нижние колонтитулы
+Foreground	Передний план
+Format	Формат
+Format Background	Формат фона
+Format Background…	Формат фона…
+Format Painter	Формат по образцу
+Format Painter (double-click to keep it on)	Формат по образцу (двойной щелчок — оставить включённым)
+Format Pane	Область формата
+Format Shape	Формат фигуры
+Format Shape…	Формат фигуры…
+Formatting State	Состояние форматирования
+Frame Slides	Обрамить слайды
+Frame shape	Форма рамки
+Freeform	Полилиния
+French (France)	Французский (Франция)
+From 	С 
+From Beginning	С начала
+From Bottom	Снизу
+From Current Slide	С текущего слайда
+From Left	Слева
+From Right	Справа
+From Top	Сверху
+From bottom left	Снизу слева
+From bottom right	Снизу справа
+From center	Из центра
+From slide:	Со слайда:
+From the top-left corner of the slide	От левого верхнего угла слайда
+From top left	Сверху слева
+From top right	Сверху справа
+Full	Полная
+Full Page Slides	Слайды во всю страницу
+General	Общие
+Get Text	Получить текст
+Glow	Свечение
+Go to	Перейти
+Go to Slide	Перейти к слайду
+Grab bag	Разное
+Gradient fill	Градиентная заливка
+Gradient stops	Точки градиента
+Gradient…	Градиент…
+Grayscale	Оттенки серого
+Greek	Греческий
+Grid Options	Параметры сетки
+Grid Options…	Параметры сетки…
+Grid and Guides	Сетка и направляющие
+Gridlines	Сетка
+Group	Сгруппировать
+Group Objects	Сгруппировать объекты
+Guides	Направляющие
+Half	Половина
+Handout Master	Образец выдач
+Handout Placeholders	Заполнители выдач
+Handouts (1 slide per page)	Выдачи (1 слайд на странице)
+Handouts (2 slides per page)	Выдачи (2 слайда на странице)
+Handouts (3 slides per page)	Выдачи (3 слайда на странице)
+Handouts (4 slides per page)	Выдачи (4 слайда на странице)
+Handouts (6 slides per page)	Выдачи (6 слайдов на странице)
+Handouts (9 slides per page)	Выдачи (9 слайдов на странице)
+Hanging	Выступ
+Header	Верхний колонтитул
+Header &\nFooter	Колонтитулы
+Header Row	Строка заголовка
+Header and Footer	Колонтитулы
+Header and Footer…	Колонтитулы…
+Heading and body fonts for this presentation.	Шрифты заголовков и основного текста этой презентации.
+Heading font	Шрифт заголовков
+Heading sample  {major}	Образец заголовка  {major}
+Heading:	Заголовок:
+Heavy	Толстая
+Height	Высота
+Height (in):	Высота (дюймы):
+Height:	Высота:
+Help	Справка
+Hidden slides	Скрытые слайды
+Hide	Скрыть
+Hide All	Скрыть все
+Hide Background Graphics	Скрыть фоновые рисунки
+Hide During Show	Скрывать при показе
+Hide Slide	Скрыть слайд
+Hide background graphics	Скрыть фоновые рисунки
+Hierarchy	Иерархия
+High	Высокая
+Highlight click	Выделять по щелчку
+Highlighter	Маркер
+Home	Главная
+Horizontal	Горизонтально
+Horizontal (in):	По горизонтали (дюймы):
+How would you describe this object and its context to someone who is blind or has low vision?	Как бы вы описали этот объект и его смысл человеку, который не видит или плохо видит?
+Hyperlink to:	Гиперссылка на:
+I. II. III.	I. II. III.
+Icon Gallery	Коллекция значков
+Icons	Значки
+Ignore All	Пропустить все
+Illustrations	Иллюстрации
+Images	Изображения
+In	Начало
+Include hidden slides	Включая скрытые слайды
+Increase Font Size	Увеличить размер шрифта
+Increase List Level	Повысить уровень списка
+Indent after text must be a number of inches	Отступ после текста должен быть числом (дюймы)
+Indent before text must be a number of inches	Отступ перед текстом должен быть числом (дюймы)
+Indentation	Отступы
+Info	Информация
+Ink to\nMath	Рукопись\nв формулу
+Ink to\nShape	Рукопись\nв фигуру
+Ink to Math (coming soon)	Рукописный в формулу (скоро)
+Ink to Shape	Рукописный ввод в фигуры
+Ink to Shape: turn drawn lines, rectangles, ovals and triangles into shapes	Рукописный в фигуру: нарисованные линии, прямоугольники, овалы и треугольники становятся фигурами
+Ink to Text	Рукописный в текст
+Ink to Text (coming soon)	Рукописный в текст (скоро)
+Inner	Внутренняя
+Insert	Вставка
+Insert\nAbove	Вставить\nсверху
+Insert\nBelow	Вставить снизу
+Insert\nLeft	Вставить слева
+Insert\nRight	Вставить справа
+Insert Above	Вставить сверху
+Insert Below	Вставить снизу
+Insert Hyperlink	Вставить гиперссылку
+Insert Layout	Вставить макет
+Insert Left	Вставить слева
+Insert Picture	Вставить рисунок
+Insert Picture in SmartArt	Вставить рисунок в SmartArt
+Insert Picture in SmartArt…	Вставить рисунок в SmartArt…
+Insert Placeholder	Вставить заполнитель
+Insert Right	Вставить справа
+Insert Shapes	Вставка фигур
+Insert Synonym	Вставить синоним
+Insert Table	Вставить таблицу
+Insert Table…	Вставить таблицу…
+Insert picture from file…	Вставить рисунок из файла…
+Insert slides from {name} after the current slide:	Вставить слайды из {name} после текущего слайда:
+Insert…	Вставка…
+Inside Borders	Внутренние границы
+Inside Horizontal Border	Внутренняя горизонтальная граница
+Inside Vertical Border	Внутренняя вертикальная граница
+Inspect Presentation	Сведения о презентации
+Inspect Shape	Сведения о фигуре
+Inspect Slide	Сведения о слайде
+Interface Language	Язык интерфейса
+Interface Theme	Тема интерфейса
+Interface size	Размер интерфейса
+Interface theme	Тема интерфейса
+Italic	Курсив
+JPEG Picture (*.jpg)	Рисунок JPEG (*.jpg)
+JPEG image (current slide)	Рисунок JPEG (текущий слайд)
+Japanese	Японский
+Join type	Тип соединения
+Justify	По ширине
+Justify low	Выровнять по низу
+Keep Source Formatting	Сохранить исходное форматирование
+Keep Text Only	Вставить без форматирования
+Keep source formatting	Сохранять исходное форматирование
+Keeps the layout, fonts and pictures	Сохраняет макет, шрифты и рисунки
+Landscape	Альбомная
+Landscape Orientation	Альбомная ориентация
+Language	Язык
+Language:	Язык:
+Large	Большой
+Large (1280 px wide)	Большой (ширина 1280 пикс.)
+Last	Последний
+Last Column	Последний столбец
+Last Slide	Последний слайд
+Last Slide Viewed	Последний просмотренный слайд
+Last commit	Последний коммит
+Layout	Макет
+Layout Placeholders	Заполнители макета
+Layouts	Макеты
+Learn\nMore	Подробнее
+Leave the slide background out: only what is on the slide is drawn	Без фона слайда: рисуется только то, что лежит на слайде
+Left	Слева
+Left Border	Левая граница
+Left Tab	Табуляция по левому краю
+Less Brightness	Уменьшить яркость
+Less Contrast	Уменьшить контрастность
+Letter	Letter
+Light	Светлая
+Light/Dark appearance	Светлое/тёмное оформление
+Lighting	Освещение
+Line	Линия
+Line Spacing	Межстрочный интервал
+Line Spacing Options…	Параметры межстрочного интервала…
+Line delta	Разница строк
+Line spacing	Межстрочный интервал
+Line spacing must be a number	Межстрочный интервал должен быть числом
+Linear	Линейный
+Lines +/−	Строки +/−
+Lines added	Добавлено строк
+Lines deleted	Удалено строк
+Link	Ссылка
+Links	Связи
+Link…	Ссылка…
+List	Список
+List Commands	Список команд
+List Slides to Reuse	Список слайдов для повторного использования
+Location	Расположение
+Lock	Заблокировать
+Lock aspect ratio	Сохранять пропорции
+Long Dash	Длинный штрих
+Long Dash Dot	Длинный штрихпунктир
+Loop Until Next Sound	Непрерывно до следующего звука
+Loop continuously until 'Esc'	Непрерывный цикл до нажатия Esc
+Loop forever	Повторять бесконечно
+Loop until Stopped	Непрерывно
+Loose	Свободно
+Low	Низкая
+MIT OR Apache-2.0 · © 2026 ArtCraft Team, the DeckCraft and AI-PowerPoint contributors	MIT OR Apache-2.0 · © 2026 команда ArtCraft, авторы DeckCraft и AI-PowerPoint
+Manage Presentation	Управление презентацией
+Margins (pt)	Поля (пт)
+Mark as decorative	Пометить как декоративный
+Mark selected text as:	Пометить выделенный текст как:
+Master Layout	Макет образца
+Master Views	Режимы образцов
+Match case	С учётом регистра
+Material	Материал
+Math	Математика
+Matrix	Матрица
+Maximize content (else ensure fit)	Увеличить содержимое (иначе — вписать)
+Media	Носитель
+Media Info	Сведения о мультимедиа
+Medium	Средняя
+Medium (960 px wide)	Средний (ширина 960 пикс.)
+Merge	Объединить
+Merge\nCells	Объединить ячейки
+Merge Cells	Объединить ячейки
+Merge Shapes	Объединить фигуры
+Merged PRs	Принятые PR
+Middle	По центру
+Mirror	Зеркало
+Mirror type	Тип отражения
+Miter	Митра
+Model	Модель
+Models	Модели
+Month names and AM/PM are listed for English. Other languages list the numeric date and 24-hour time.	Названия месяцев и AM/PM даны для английского. Для других языков — числовая дата и 24-часовое время.
+More Brightness	Увеличить яркость
+More Colors… #	Другие цвета… #
+More Contrast	Увеличить контрастность
+More presentations	Другие презентации
+More templates	Другие шаблоны
+More themes	Другие темы
+Motion	Motion
+Motion Paths	Пути перемещения
+Mouse Click	Щелчок мышью
+Mouse Over	Наведение указателя
+Move	Переместить
+Move Down	Переместить вниз
+Move Guide	Переместить направляющую
+Move Handle	Переместить маркер
+Move Insertion Point	Переместить курсор
+Move Point	Переместить узел
+Move Section	Переместить раздел
+Move Section Down	Переместить раздел вниз
+Move Section Up	Переместить раздел вверх
+Move Slide	Переместить слайд
+Move Up	Переместить вверх
+Multiple	Несколько
+Mute	Без звука
+Name	Имя
+Name (A–Z)	Имя (А–Я)
+Name:	Имя:
+Narrow	Узкая
+New	Создать
+New\nComment	Новый\nкомментарий
+New\nWindow	Новое\nокно
+New Comment	Новый комментарий
+New Photo Album…	Новый фотоальбом…
+New Presentation	Новая презентация
+New Slide	Создать слайд
+New Slide (⇧⌘N)	Создать слайд (Ctrl+Shift+N)
+New Text Box	Новая надпись
+New Window	Новое окно
+New Window needs a slide	Для нового окна нужен слайд
+New Window needs an open presentation	Для нового окна нужна открытая презентация
+New show name:	Имя нового показа:
+Next	Далее
+Next Comment	Следующий комментарий
+Next Page	Следующая страница
+Next Slide	Следующий слайд
+Next Window	Следующее окно
+Next ▶	Далее ▶
+No Border	Без границы
+No Color	Без цвета
+No Fill	Нет заливки
+No Glow	Без свечения
+No Outline	Нет контура
+No Reflection	Без отражения
+No Shadow	Без тени
+No Soft Edges	Без сглаживания
+No Transform	Без трансформации
+No accessibility issues found. People with disabilities should not have difficulty reading this document.	Проблем со специальными возможностями не найдено. Людям с ограниченными возможностями не должно быть трудно читать этот документ.
+No comments.	Комментариев нет.
+No contributor data was built into this copy.	В эту сборку не включены данные об участниках.
+No differences left.	Различий не осталось.
+No fill	Нет заливки
+No icons match.	Подходящих значков нет.
+No line	Нет линии
+No model credits were built into this copy.	В эту сборку не включены сведения о моделях.
+No notes.	Заметок нет.
+No pictures yet	Рисунков пока нет
+No presentation is open.	Нет открытой презентации.
+No sound: {err}	Нет звука: {err}
+None	Нет
+Normal	Обычный
+Not a copy of this presentation: slides are matched by position.	Это не копия этой презентации: слайды сопоставляются по порядку.
+Not saved yet	Ещё не сохранено
+Notes	Заметки
+Notes Master	Образец заметок
+Notes Page	Страницы заметок
+Notes Pages	Страницы заметок
+Notes Placeholders	Заполнители заметок
+Nothing to print: every slide in the range is hidden.	Нечего печатать: все слайды в диапазоне скрыты.
+Nudge	Сдвинуть
+Number of columns:	Число столбцов:
+Number of rows:	Число строк:
+Numbered	Нумерованный
+Numbering	Нумерация
+OK	OK
+Offset X	Смещение X
+Offset Y	Смещение по Y
+Offset bottom	Смещение снизу
+Offset left	Смещение слева
+Offset right	Смещение справа
+Offset top	Смещение сверху
+On Click	По щелчку
+On Click of {name}	По щелчку на {name}
+On Click of… (none)	По щелчку на… (нет)
+On Mouse Click	По щелчку мыши
+Open	Открыть
+Open Arrow	Открытая стрелка
+Open Data	Открыть данные
+Open Dialog	Открыть окно
+Open Path	Открытый путь
+Open Recovered Presentations	Открыть восстановленные презентации
+Open a presentation from a folder (Ctrl+O)	Открыть презентацию из папки (Ctrl+O)
+Open another window on this presentation	Открыть эту презентацию ещё в одном окне
+Open file location	Открыть папку с файлом
+Open source under MIT OR Apache-2.0. Not affiliated with Microsoft.	Открытый код по лицензии MIT OR Apache-2.0. Не связан с Microsoft.
+Opened the presentation as a PDF to print	Презентация открыта как PDF для печати
+Opening {name}…	Открытие {name}…
+Opens in PowerPoint and other presentation apps	Открывается в PowerPoint и других программах для презентаций
+Opens on any device with a PDF viewer	Открывается на любом устройстве с программой просмотра PDF
+Open…	Открыть…
+Options	Параметры
+Order Objects	Порядок объектов
+Ordinals (1st) with superscript	Порядковые номера (1st) надстрочными знаками
+Orientation:	Ориентация:
+Other Sound…	Другой звук…
+Out	Конец
+Outer	Внешняя
+Outline (*.txt)	Структура (*.txt)
+Outline (.txt)	Структура (.txt)
+Outline View	Режим структуры
+Outline/RTF (*.rtf)	Структура/RTF (*.rtf)
+Outline/RTF (.rtf)	Структура/RTF (.rtf)
+Outside Borders	Внешние границы
+Oval	Овал
+Oval ends	Овальные концы
+PDF (*.pdf)	PDF (*.pdf)
+PDF document (.pdf)	Документ PDF (.pdf)
+PNG Picture (*.png)	Рисунок PNG (*.png)
+PNG images (all slides)	Рисунки PNG (все слайды)
+PNG images (current slide)	Рисунок PNG (текущий слайд)
+PRs	PR
+Page Number	Номер страницы
+Page Setup…	Параметры страницы…
+Pane	Область
+Paper	Бумага
+Paragraph	Абзац
+Paragraph…	Абзац…
+Paste	Вставить
+Paste (⌘V)	Вставить (⌘V)
+Paste Formatting	Вставить форматирование
+Paste Special	Специальная вставка
+Paste Special…	Специальная вставка…
+Paste and Match Formatting	Вставить с форматированием конечного фрагмента
+Paste or type an outline. Unindented lines become slide titles; tab-indented lines become bullets.	Вставьте или наберите структуру. Строки без отступа станут заголовками слайдов, строки с отступом (Tab) — пунктами списка.
+Pasted image.png	Вставленный рисунок.png
+Path	Контур
+Pattern fill	Узорная заливка
+Pause	Пауза
+Pen Color	Цвет пера
+Pen Style	Стиль пера
+Pen Weight	Толщина пера
+Pencil	Карандаш
+Percent:	Проценты:
+Perspective	Перспектива
+Photo Album	Фотоальбом
+Photo Album options	Параметры фотоальбома
+Photo Album…	Фотоальбом…
+Pick a design for this slide. Ideas are generated on your device.	Выберите оформление этого слайда. Идеи создаются на вашем устройстве.
+Pick a graphic; type one item per line.	Выберите рисунок; вводите по одному пункту в строке.
+Picture	Рисунок
+Picture (PNG)	Рисунок (PNG)
+Picture Border	Граница рисунка
+Picture Format	Формат рисунка
+Picture Style Gallery	Коллекция стилей рисунков
+Picture Styles	Стили рисунков
+Picture from File…	Рисунок из файла…
+Picture layout	Разметка рисунков
+Picture or texture fill	Рисунок или текстура
+Picture source	Источник рисунка
+Pictures	Рисунки
+Pictures in album	Рисунки в альбоме
+Placeholders	Заполнители
+Play	Воспроизвести
+Play Across Slides	Воспроизводить на всех слайдах
+Play Full Screen	Во весь экран
+Play Narrations	Воспроизвести речевое сопровождение
+Play from Current Slide	С текущего слайда
+Play from Start	С начала
+Play the shape's media	Воспроизвести мультимедиа фигуры
+Play this slide's animations on the canvas	Воспроизвести анимацию этого слайда
+Play/Pause	Воспроизведение/пауза
+Play/Pause GIF	Воспроизвести/приостановить GIF
+Playback	Воспроизведение
+Point Type	Тип узла
+Points	Пункты
+Portrait	Книжная
+Portrait Orientation	Книжная ориентация
+Position	Положение
+Position Objects	Расположение объектов
+Position and Size	Положение и размер
+Post	Опубликовать
+Poster Frame	Заставка
+PowerPoint Presentation (*.pptx)	Презентация PowerPoint (*.pptx)
+PowerPoint Presentation (.pptx)	Презентация PowerPoint (.pptx)
+Preferences	Настройки
+Preferences…	Настройки…
+Present	Показ
+Presentation	Представление
+Presentations	Презентации
+Presentations and slide shows, rebuilt from scratch in pure Rust.	Презентации и показы слайдов, созданные с нуля на чистом Rust.
+Presentations you open show up here. Use Open to browse for one.	Здесь появятся открытые вами презентации. Чтобы найти презентацию, нажмите «Открыть».
+Presented by a speaker (full screen)	Управляемый докладчиком (во весь экран)
+Presenter View	Режим докладчика
+Presenter View — AI-PowerPoint	Режим докладчика — AI-PowerPoint
+Preserve	Сохранить
+Preset gradients	Готовые градиенты
+Presets	Наборы
+Preview	Предварительный просмотр
+Preview Animations	Просмотр анимации
+Previewing animations	Просмотр анимации
+Previous	Назад
+Previous Comment	Предыдущий комментарий
+Previous Page	Предыдущая страница
+Previous Slide	Предыдущий слайд
+Print	Печать
+Print All Slides	Напечатать все слайды
+Print Current Slide	Напечатать текущий слайд
+Print Hidden Slides	Печатать скрытые слайды
+Print layout:	Макет печати:
+Print them for your audience	Распечатайте для слушателей
+Print…	Печать…
+Process	Процесс
+Product Information	Сведения о продукте
+Program:	Программа:
+Promote	Повысить уровень
+Proofing	Правописание
+Properties	Свойства
+Punctuation	Пунктуация
+Put a picture in the selected node's picture placeholder	Поместить рисунок в заполнитель выбранного узла
+Pyramid	Пирамида
+Quick Access Toolbar	Панель быстрого доступа
+Quick Styles	Экспресс-стили
+Radial	Радиальный
+Reading View	Режим чтения
+Real name	Настоящее имя
+Recent	Последние
+Recolor	Перекрасить
+Recolor Gallery	Коллекция перекраски
+Record	Запись
+Recording narration needs audio capture (coming soon)	Для записи речевого сопровождения нужна запись звука (скоро)
+Recover Unsaved Presentations	Восстановить несохранённые презентации
+Recovered Presentations	Восстановленные презентации
+Rectangle	Прямоугольник
+Rectangular	Прямоугольная
+Red Pen	Красное перо
+Redo	Вернуть
+Reflection	Отражение
+Regroup	Перегруппировать
+Regular	Обычный
+Rehearse Timings	Настройка времени
+Reject	Отклонить
+Reject Revision	Отклонить исправление
+Relationship	Связь
+Remove	Удалить
+Remove\nBackground	Удалить фон
+Remove All Animations	Удалить всю анимацию
+Remove All Sections	Удалить все разделы
+Remove Animation	Удалить анимацию
+Remove Background	Удалить фон
+Remove Less (tighter)	Удалить меньше (плотнее)
+Remove More (looser)	Удалить больше (свободнее)
+Remove Section	Удалить раздел
+Remove Section & Slides	Удалить раздел и слайды
+Remove Shape	Удалить фигуру
+Remove bullets and numbering	Убрать маркеры и нумерацию
+Remove from Quick Access Toolbar	Удалить с панели быстрого доступа
+Remove from Recent	Убрать из недавних
+Remove stop	Удалить ограничитель
+Remove the picture style	Убрать стиль рисунка
+Rename	Переименовать
+Rename Layout	Переименовать лист
+Rename Presentation	Переименовать презентацию
+Rename Section	Переименовать раздел
+Rename Section…	Переименовать раздел…
+Rename Slide	Переименовать слайд
+Render Slide	Отрисовать слайд
+Reopen	Открыть снова
+Reorder Animation	Изменить порядок анимации
+Reorder Objects	Изменить порядок объектов
+Repeated word	Повтор слова
+Replace	Заменить
+Replace All	Заменить все
+Replace Font	Заменить шрифт
+Replace Fonts	Заменить шрифты
+Replace Fonts…	Заменить шрифты…
+Replace fractions (1/2) with fraction characters (½)	Заменять дроби (1/2) знаками дробей (½)
+Replace straight quotes with smart quotes	Заменять прямые кавычки парными
+Replace text as you type	Заменять текст при вводе
+Replace with:	Заменить на:
+Replace:	Заменить:
+Replace…	Заменить…
+Reply	Ответить
+Reply…	Ответить…
+Rescan Installed Fonts	Обновить список шрифтов
+Reset	Сбросить
+Reset 3-D	Сбросить объём
+Reset Background	Восстановить фон
+Reset Crop	Сбросить обрезку
+Reset Effects	Сбросить эффекты
+Reset Picture	Сбросить рисунок
+Reset Slide	Сбросить слайд
+Reset Slide Background	Восстановить фон слайда
+Reset Style	Сбросить стиль
+Reset to Defaults	Сбросить к значениям по умолчанию
+Resize shape to fit text	Подгонять размер фигуры под текст
+Resolve	Отметить решённым
+Resolve Thread	Решить обсуждение
+Resume	Продолжить
+Reuse Slides	Повторное использование слайдов
+Reuse Slides (Keep Source Formatting)…	Повторное использование слайдов (с исходным форматированием)…
+Reuse Slides needs the desktop app	Повторное использование слайдов работает только в настольной версии
+Reuse Slides…	Повторное использование слайдов…
+Reverse the order	Обратный порядок
+Revert	Восстановить
+Review	Рецензирование
+Revisions	Ревизии
+Rewind after Playing	Перемотать после воспроизведения
+Ribbon Tab	Вкладка ленты
+Right	Справа
+Right Border	Правая граница
+Right Tab	Табуляция по правому краю
+Right-click any ribbon button to add it.	Чтобы добавить кнопку ленты, щёлкните её правой кнопкой мыши.
+Right-to-Left Text Direction	Направление текста справа налево
+Rotate	Повернуть
+Rotate Left	Повернуть влево
+Rotate Left 90°	Повернуть влево на 90°
+Rotate Right	Повернуть вправо
+Rotate Right 90°	Повернуть вправо на 90°
+Rotate all text 270°	Повернуть весь текст на 270°
+Rotate all text 90°	Повернуть весь текст на 90°
+Rotate or Flip	Повернуть или отразить
+Rotate with shape	Вращать вместе с фигурой
+Rotation	Поворот
+Rotation (°):	Поворот (°):
+Round	Скруглённый
+Round Dot	Круглые точки
+Rounded	Скруглённый
+Rows & Columns	Строки и столбцы
+Ruler	Линейка
+Run program:	Запустить программу:
+Sample deck: Northern Lights	Пример презентации: Северное сияние
+Saturation	Насыщенность
+Save	Сохранить
+Save As	Сохранить как
+Save As…	Сохранить как…
+Save AutoRecover Information	Сохранить данные автовосстановления
+Save as Template…	Сохранить как шаблон…
+Save to Data	Сохранить в данные
+Saved	Сохранено
+Saved {path}	Сохранено: {path}
+Saving a copy needs a file picker, which this window doesn't have.	Для сохранения копии нужно окно выбора файла, а в этом окне его нет.
+Saving {name}…	Сохраняю {name}…
+Scale X	Масштаб по X
+Scale Y	Масштаб по Y
+Scale height	Масштаб по высоте
+Scale height (%):	Масштаб по высоте (%):
+Scale width	Масштаб по ширине
+Scale width (%):	Масштаб по ширине (%):
+Scheme name	Имя набора
+ScreenTip:	Подсказка:
+Screenshot	Снимок экрана
+Screenshot (not available yet)	Снимок экрана (пока недоступен)
+Search commands (⇧⌘P)	Поиск команд (Ctrl+Shift+P)
+Search commands…	Поиск команд…
+Search for a file	Поиск файла
+Search for themes and templates	Поиск тем и шаблонов
+Search icons	Поиск значков
+Seconds per slide:	Секунд на слайд:
+Section	Раздел
+Seek	Перейти
+Segment Type	Тип сегмента
+Select	Выделение
+Select All	Выделить всё
+Select All Text	Выделить весь текст
+Select Cells	Выделить ячейки
+Select None	Снять выделение
+Select Objects	Выделить объекты
+Select Paragraph	Выделить абзац
+Select Slides	Выделить слайды
+Select Text	Выделить текст
+Select Word	Выделить слово
+Select a SmartArt graphic to edit its text.	Выделите рисунок SmartArt, чтобы изменить его текст.
+Select a chart first.	Сначала выделите диаграмму.
+Select a picture to rotate it or change brightness and contrast	Выделите рисунок, чтобы повернуть его или изменить яркость и контрастность
+Select a shape to format it.	Выделите фигуру, чтобы изменить её формат.
+Select an object on the slide and add an animation from the Animations tab.	Выделите объект на слайде и добавьте анимацию на вкладке «Анимация».
+Selection	Выделение
+Selection\nPane	Область выделения
+Selection Pane	Область выделения
+Selection Pane…	Область выделения…
+SemiBold	Полужирный
+Send\nBackward	Переместить назад
+Send Backward	Переместить назад
+Send to Back	На задний план
+Sentence case.	Как в предложениях.
+Set	Установить
+Set Text	Задать текст
+Set Transparent Color	Установить прозрачный цвет
+Set Transparent Color: click the colour in the picture (Esc cancels)	Установить прозрачный цвет: щёлкните цвет на рисунке (Esc — отмена)
+Set Up	Настройка
+Set Up Show…	Настройка показа…
+Set Up Slide Show	Настройка показа слайдов
+Set Up Slide Show…	Настройка показа слайдов…
+Set Zoom	Задать масштаб
+Set as Default Shape	Сделать фигурой по умолчанию
+Settings	Настройки
+Several slides on each page of a PDF	Несколько слайдов на каждой странице PDF
+Shading	Заливка
+Shadow	Тень
+Shape\nStyles	Стили фигур
+Shape Effects	Эффекты формы
+Shape Fill	Заливка фигуры
+Shape Format	Формат фигуры
+Shape Gallery	Коллекция фигур
+Shape Outline	Контур фигуры
+Shape Styles	Стили фигур
+Shapes	Фигуры
+Share	Поделиться
+Show	Показать
+Show\nComments	Показать\nкомментарии
+Show All	Показать всё
+Show Media Controls	Показывать элементы управления мультимедиа
+Show Slide	Показать слайд
+Show smart guides	Показывать смарт-направляющие
+Show type	Тип показа
+Show without animation	Без анимации
+Show without narration	Без речевого сопровождения
+Show/Hide	Показать/скрыть
+Shrink text on overflow	Сжимать текст при переполнении
+Simple, white	Простая, белая
+Single	Одинарный
+Size	Размер
+Size & Properties	Размер и свойства
+Size (% of text):	Размер (% от текста):
+Size and Position	Размер и положение
+Size and Position…	Размер и положение…
+Size:	Размер:
+Slide Image	Изображение слайда
+Slide Master	Образец слайдов
+Slide Number	Номер слайда
+Slide Show	Слайд-шоу
+Slide Size	Размер слайда
+Slide Sorter	Сортировщик слайдов
+Slide inserted after {slide}	Слайд вставлен после {slide}
+Slide number	Номер слайда
+Slide timings recorded.	Время показа слайдов записано.
+Slide {n} of {total}	Слайд {n} из {total}
+Slides	Слайды
+Slides (e.g. 1,3,5):	Слайды (например, 1,3,5):
+Slides From	Слайды из
+Slides from Outline	Слайды из структуры
+Slides from Outline…	Слайды из структуры…
+Slides sized for:	Размер слайдов для:
+Slides:	Слайды:
+Slides: choose a range from 1 to {n}	Слайды: выберите диапазон от 1 до {n}
+Slide…	Слайд…
+Small	Малый
+Small (640 px wide)	Маленький (ширина 640 пикс.)
+Small caps	Малые прописные
+SmartArt	SmartArt
+SmartArt Design	Конструктор SmartArt
+SmartArt Styles	Стили SmartArt
+Smooth Corners	Сглаженные углы
+Smooth Point	Гладкий узел
+Snap	Привязка
+Snap objects to grid	Привязывать объекты к сетке
+Snap objects to other objects	Привязывать объекты к другим объектам
+Soft Edges	Сглаживание
+Solid	Сплошная
+Solid fill	Сплошная заливка
+Solid line	Сплошная линия
+Sort	Сортировка
+Sound	Звук
+Sound:	Звук:
+Space	Пробел
+Spacing	Интервал
+Spacing (pt):	Интервал (пт):
+Spacing after	Интервал после
+Spacing after must be a number	Интервал после должен быть числом
+Spacing before	Интервал перед
+Spacing before must be a number	Интервал перед должен быть числом
+Special	Специальный
+Special indent must be a number of inches	Особый отступ должен быть числом (дюймы)
+Specify the company	Укажите организацию
+Specify the subject	Укажите тему
+Spelling	Орфография
+Spelling Dictionary	Орфографический словарь
+Spelling is checked for languages marked (dictionary).	Орфография проверяется для языков с пометкой (словарь).
+Split\nCells	Разделить ячейки
+Split Cells	Разделить ячейки
+Square	Квадрат
+Square Dot	Квадратные точки
+Stacked	Стопкой
+Standard (4:3)	Стандартный (4:3)
+Standard Colors	Стандартные цвета
+Start After Previous	Запускать после предыдущего
+Start Automatically	Запускать автоматически
+Start On Click	Запускать по щелчку
+Start Slide Show	Начать показ слайдов
+Start With Previous	Запускать вместе с предыдущим
+Start a conversation	Начать обсуждение
+Start at:	Начать с:
+Start from Beginning	С начала
+Start time (s):	Начало (с):
+Start:	Начало:
+Starter Templates	Начальные шаблоны
+Stealth	Тонкая стрелка
+Stealth end	Тонкая стрелка в конце
+Still opening {name}	Ещё открывается {name}
+Stop	Стоп
+Stop Editing Text	Закончить правку текста
+Straight Point	Прямой узел
+Straight Segment	Прямой сегмент
+Strikethrough	Зачёркнутый
+Style {i}	Стиль {i}
+Subject	Тема
+Subscript	Подстрочный
+Subtle	Простые
+Superscript	Надстрочный
+Swedish	Шведский
+Symbol	Символ
+Symbols	Символы
+Tab	Табуляция
+Tab stop position (in):	Позиция табуляции (дюймы):
+Tab stops:	Позиции табуляции:
+Table	Таблица
+Table Design	Дизайн таблицы
+Table Eraser	Ластик таблицы
+Table Layout	Макет таблицы
+Table Style Options	Параметры стилей таблиц
+Table Styles	Стили таблиц
+Tables	Таблицы
+Table…	Таблица…
+Tabs	Табуляции
+Tabs…	Табуляция…
+Tags	Теги
+Task Pane	Область задач
+Templates	Шаблоны
+Text	Текст
+Text\nBox	Текстовое\nполе
+Text\nPane	Область текста
+Text Box	Текстовое поле
+Text Box Margins	Поля надписи
+Text Direction	Направление текста
+Text Effects	Текстовые эффекты
+Text Fill	Заливка текста
+Text Highlight Color	Цвет выделения текста
+Text Options	Параметры текста
+Text Outline	Контур текста
+Text Pane	Область текста
+Text Shadow	Тень текста
+Text Transform	Преобразование текста
+Text Transparency	Прозрачность текста
+Text box:	Надпись:
+Text boxes have no picture options	У надписей нет параметров рисунка
+Text is longer than 400 characters	Текст длиннее 400 знаков
+Text: {text}	Текст: {text}
+That file is empty	Этот файл пуст
+That picture is larger than 32 MB	Рисунок больше 32 МБ
+The Eyedropper takes colours from a slide	Пипетка берёт цвета со слайда
+The current slide as a compressed picture	Текущий слайд как сжатый рисунок
+The current slide as a picture	Текущий слайд как рисунок
+The picture list is invalid	Неверный список рисунков
+The presentation keeps its own file	У презентации остаётся свой файл
+The slide titles and bullet text as plain text	Заголовки слайдов и пункты как обычный текст
+The slide titles and bullet text for word processors	Заголовки слайдов и пункты для текстовых редакторов
+The spelling check is complete. No issues found.	Проверка орфографии завершена. Ошибок не найдено.
+The version, the people and models who built it, and where to find us.	Версия, люди и модели, которые её создали.
+The web build inserts album pictures from data passed to insert.photoAlbum	В браузере рисунки альбома вставляются из данных, переданных insert.photoAlbum
+Theme Colors	Цвета темы
+Theme Gallery	Коллекция тем
+Themes	Темы
+Themes (whole presentation)	Темы (вся презентация)
+There are no unsaved changes.	Несохранённых изменений нет.
+There are no unsaved presentations to recover	Нет несохранённых презентаций для восстановления
+Thesaurus	Тезаурус
+Thick Thin	Толстая и тонкая
+Thin Thick	Тонкая и толстая
+This Document	Этот документ
+This presentation has never been saved.	Эта презентация ещё не сохранялась.
+This presentation has no custom shows (Slide Show ▸ Custom Slide Show).	В этой презентации нет произвольных показов (Слайд-шоу ▸ Произвольный показ слайдов).
+This presentation has unsaved changes. Revert goes back to the saved file.	В презентации есть несохранённые изменения. «Восстановить» вернёт сохранённый файл.
+This slide has no animations	На этом слайде нет анимации
+Three a page leaves lines for notes	По три на странице — с линиями для заметок
+Tick at least one slide to insert	Отметьте хотя бы один слайд для вставки
+Tight	Плотный
+Tile picture as texture	Преобразовать рисунок в текстуру
+Timing	Тайминг
+Title	Заголовок
+To slide:	По слайд:
+To the site	На сайт
+Tools	Инструменты
+Top	Сверху
+Top Border	Верхняя граница
+Top Left	Сверху слева
+Top Right	Сверху справа
+Top bevel	Верхний рельеф
+Top left	Сверху слева
+Top right	Сверху справа
+Total Row	Строка итогов
+Transform	Трансформировать
+Transition	Переход
+Transition Gallery	Коллекция переходов
+Transition to This Slide	Переход к этому слайду
+Transitions	Переходы
+Translate	Перевести
+Translation needs a language model (not bundled)	Для перевода нужна языковая модель (ИИ-помощник у выделения)
+Transparency	Прозрачность
+Transparent background	Прозрачный фон
+Trigger	Триггер
+Trim	Подрезать
+Trim Media	Монтаж мультимедиа
+Triple	Тройная
+Type	Тип
+Type Text	Ввести текст
+Type an equation in linear form (e.g. a^2+b^2=c^2, x=(-b±√(b^2-4ac))/2a).	Введите формулу в линейной записи (например, a^2+b^2=c^2, x=(-b±√(b^2-4ac))/2a).
+Type and organise the diagram's text	Введите и упорядочьте текст схемы
+Type the text for the new text box	Введите текст новой надписи
+Type your text here	Введите текст
+UPPERCASE	ПРОПИСНЫЕ
+URL…	URL…
+Underline	Подчёркнутый
+Undo	Отменить
+Ungroup	Разгруппировать
+Unlock	Разблокировать
+Up	Вверх
+Update	Обновить
+Update automatically	Обновлять автоматически
+Use Destination Theme	Использовать конечную тему
+Use Timings	Использовать время показа
+Use timings, if present	Использовать время показа слайдов, если оно задано
+User Information	Сведения о пользователе
+Username	Имя пользователя
+Variant Gallery	Коллекция вариантов
+Variants	Варианты
+Version	Версия
+Vertical	Вертикально
+Vertical (in):	По вертикали (дюймы):
+Vertical alignment	Вертикальное выравнивание
+Very Loose	Очень свободно
+Very Tight	Очень плотно
+Very loose	Очень свободно
+Very tight	Очень плотно
+Video	Видео
+Video Format	Формат видео
+Video from File…	Видео из файла…
+View	Вид
+Volume	Том
+Warp	Деформация
+Wavy	Волнистая
+Web Page or File	Веб-страница или файл
+Weight	Толщина
+White	Белый
+White on	Белый на
+Wide	Широкие
+Widescreen (16:9)	Широкоэкранный (16:9)
+Width	Ширина
+Width (in):	Ширина (дюймы):
+Width (pixels):	Ширина (пикселей):
+Width:	Ширина:
+Width: 	Ширина: 
+Window	Окно
+With	С
+With Previous	С предыдущим
+With:	На:
+WordArt	WordArt
+WordArt Styles	Стили WordArt
+Wrap Text in Shape	Переносить текст в фигуре
+Wrap text in shape	Переносить текст в фигуре
+X Rotation	Вращение вокруг X
+Y Rotation	Вращение вокруг Y
+Your changes will be lost if you don't save them.	Если не сохранить, изменения будут потеряны.
+Your name (comments):	Ваше имя (для комментариев):
+Z Rotation	Вращение вокруг Z
+Zoom	Масштаб
+Zoom In	Увеличить
+Zoom Out	Уменьшить
+Zoom on	Масштаб
+Zoom to	Масштаб до
+Zoom…	Масштаб…
+[No Sound]	[Нет звука]
+[Stop Previous Sound]	[Остановить предыдущий звук]
+abc	абв
+e.g. 1-3, 5	например, 1-3, 5
+size (pt)	размер (пт)
+{name} Slide Master	Образец слайдов «{name}»

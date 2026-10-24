@@ -94,6 +94,14 @@ pub enum PhType {
     SlideImage,
 }
 
+/// Whether empty placeholders prompt in Russian ([`set_russian_prompts`]).
+static RUSSIAN_PROMPTS: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// Prompt in empty placeholders in Russian (`true`) or English (AI-PowerPoint's interface language).
+pub fn set_russian_prompts(on: bool) {
+    RUSSIAN_PROMPTS.store(on, std::sync::atomic::Ordering::Relaxed);
+}
+
 impl PhType {
     pub fn xml(self) -> &'static str {
         match self {
@@ -140,6 +148,9 @@ impl PhType {
     }
     /// The prompt shown in an empty placeholder in Normal view.
     pub fn prompt(self) -> &'static str {
+        if RUSSIAN_PROMPTS.load(std::sync::atomic::Ordering::Relaxed) {
+            return self.prompt_ru();
+        }
         match self {
             PhType::Title | PhType::CtrTitle => "Click to add title",
             PhType::SubTitle => "Click to add subtitle",
@@ -153,6 +164,24 @@ impl PhType {
             PhType::Footer => "Footer",
             PhType::SlideNum => "‹#›",
             PhType::Header => "Header",
+            PhType::SlideImage => "",
+        }
+    }
+    /// [`PhType::prompt`] in Russian (AI-PowerPoint's interface language).
+    fn prompt_ru(self) -> &'static str {
+        match self {
+            PhType::Title | PhType::CtrTitle => "Щёлкните, чтобы добавить заголовок",
+            PhType::SubTitle => "Щёлкните, чтобы добавить подзаголовок",
+            PhType::Body | PhType::Obj => "Щёлкните, чтобы добавить текст",
+            PhType::Chart => "Щёлкните значок, чтобы добавить диаграмму",
+            PhType::Table => "Щёлкните значок, чтобы добавить таблицу",
+            PhType::Diagram => "Щёлкните значок, чтобы добавить рисунок SmartArt",
+            PhType::Media => "Щёлкните значок, чтобы добавить мультимедиа",
+            PhType::Picture | PhType::ClipArt => "Щёлкните значок, чтобы добавить рисунок",
+            PhType::Date => "Дата",
+            PhType::Footer => "Нижний колонтитул",
+            PhType::SlideNum => "‹#›",
+            PhType::Header => "Верхний колонтитул",
             PhType::SlideImage => "",
         }
     }

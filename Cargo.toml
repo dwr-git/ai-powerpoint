@@ -64,6 +64,8 @@ craft-pdf = { git = "https://github.com/storytold/craft-libs", rev = "9f75d3dc19
 i_overlay = "9"
 quick-xml = "0.41"
 zip = { version = "3", default-features = false, features = ["deflate"] }
+# The browser boot module (apps/deckcraft-web-boot, AI-PowerPoint) inflates the app's parts where the browser can't.
+flate2 = { version = "1.1", default-features = false, features = ["rust_backend"] }
 
 # ui
 egui = "0.36"
@@ -104,3 +106,12 @@ debug = 0
 
 [patch.crates-io]
 krilla = { git = "https://github.com/storytold/craft-libs", rev = "9f75d3dc19b4b514c4f3d4847ed1ec1b0e86b4ef", version = "=0.8.2" }
+
+# The browser build (apps/deckcraft-web, AI-PowerPoint): one optimised module, no debug info.
+[profile.web-release]
+inherits = "release"
+lto = "fat"
+codegen-units = 1
+debug = false
+strip = true
+panic = "abort"

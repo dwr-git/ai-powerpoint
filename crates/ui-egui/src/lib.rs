@@ -6,6 +6,8 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 #![forbid(unsafe_code)]
 
+#[macro_use]
+pub mod i18n;
 pub mod animtimeline;
 pub mod backstage;
 pub mod canvas;
@@ -191,7 +193,7 @@ fn command_for(purpose: FilePurpose, name: &str, bytes: &[u8]) -> Result<&'stati
         FilePurpose::Open => open_command(name),
         FilePurpose::Infer => infer_command(name, bytes),
     };
-    cmd.ok_or_else(|| format!("{name}: DeckCraft can't open this kind of file"))
+    cmd.ok_or_else(|| format!("{name}: AI-PowerPoint can't open this kind of file"))
 }
 
 /// How long a transient status message stays visible.
@@ -220,6 +222,18 @@ pub struct Services {
     pub clipboard_set_html: Option<Box<dyn FnMut(&str, &str) -> bool>>,
     /// Audio output for media playback (cpal on desktop); without one media plays silently.
     pub audio_out: Option<Box<dyn deckcraft_media::AudioOut>>,
+    /// Web (AI-PowerPoint): hand a Save or Save As to the page, which keeps the file in the user's
+    /// files on the server, instead of downloading it: (file name, the presentation's path, the
+    /// bytes, whether a new name was asked for — Save As). `Ok(true)` when the page took it;
+    /// `Ok(false)` downloads as usual.
+    pub save_to_page: Option<Box<dyn Fn(&str, Option<&str>, &[u8], bool) -> Result<bool, String>>>,
+    /// Web (AI-PowerPoint): leave the editor for the site it lives on. The title bar shows a house
+    /// at its right end when set.
+    pub go_home: Option<Box<dyn Fn()>>,
+    /// Web (AI-PowerPoint): open the page's AI menu for the selected text or shapes at this point
+    /// of the window (egui points). The slide's context menu offers "AI Assistant…" and the
+    /// selected text an AI chip when set.
+    pub ai_assist: Option<Box<dyn Fn(f32, f32)>>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -382,6 +396,10 @@ pub const UI_COMMANDS: &[(&str, &str, Option<&str>, &str)] = &[
     ("view.tab", "Ribbon Tab", None, "{tab}"),
     ("view.collapseRibbon", "Collapse the Ribbon", Some("Cmd+F1"), "{}"),
     ("view.dark", "Dark Mode", None, "{on?: bool}"),
+    ("app.exportAs", "Export As", None, "{format: pdf|png|pngAll|jpeg|pptx|outline|rtf|deckcraft|gif, …options} — saves a copy the host's way (a download on the web) → {started}"),
+    ("app.rename", "Rename Presentation", None, "{name, saved?: bool} → {title}: the name the page stored the presentation under"),
+    ("ui.theme", "Interface Theme", None, "{value?: brand|light|dark} → {theme}"),
+    ("ui.language", "Interface Language", None, "{value?: ru|en} → {language}"),
     ("view.grayscale", "Grayscale", None, "{on?: bool}"),
     ("view.newWindow", "New Window", None, "{on?: bool, slide?: index, delta?: int}"),
     ("show.start", "Slide Show", Some("F5"), "{from?: index, custom?: name}"),
@@ -397,7 +415,7 @@ pub const UI_COMMANDS: &[(&str, &str, Option<&str>, &str)] = &[
         Some("Cmd+P"),
         "{layout?, perPage?, slides?, includeHidden?, frame?, paper?: letter|a4|legal|a3, orientation?: portrait|landscape}",
     ),
-    ("app.about", "About DeckCraft", None, "{}"),
+    ("app.about", "About AI-PowerPoint", None, "{}"),
     ("app.palette", "Command Palette", Some("Cmd+Shift+P"), "{}"),
     ("app.preferences", "Preferences…", Some("Cmd+,"), "{}"),
     ("app.openDialog", "Open…", None, "{purpose?}"),
@@ -667,6 +685,18 @@ impl SlideApp {
     /// Run a command by id (UI commands here, everything else in the engine). Errors show in the
     /// status bar and are returned.
     pub fn run(&mut self, id: &str, params: Value) -> Result<Value, String> {
+        // AI-PowerPoint on the web: Save and Save As without a path go to the page's files.
+        if matches!(id, "file.save" | "file.saveAs")
+            && params.get("path").is_none()
+            && self.services.pick_save.is_none()
+            && self.services.save_to_page.is_some()
+            && self.session.active().is_some_and(|d| d.path.is_none() || id == "file.saveAs")
+        {
+            let format = params.get("format").and_then(Value::as_str).unwrap_or("pptx").to_string();
+            if self.save_to_page(&format, id == "file.saveAs") {
+                return Ok(json!({"savedToPage": true}));
+            }
+        }
         let r = if UI_COMMANDS.iter().any(|c| c.0 == id) {
             self.run_ui(id, &params)
         } else {
@@ -680,6 +710,9 @@ impl SlideApp {
                     self.pending_copy = Some(t.to_string());
                 }
             }
+            // A font added while slides are drawn (the page's metric-compatible fonts arrive after
+            // the first frame): draw them again with it.
+            Ok(_) if id == "font.add" => self.textures = textures::Textures::default(),
             Ok(_) => {}
             Err(e) => self.set_status(e.clone()),
         }
@@ -761,7 +794,7 @@ impl SlideApp {
             "deckcraft" => ("deckcraft", "deckcraft", false),
             "gif" => ("gif", "gif", false),
             other => {
-                self.set_status(format!("DeckCraft can't export “{other}”"));
+                self.set_status(format!("AI-PowerPoint can't export “{other}”"));
                 return false;
             }
         };
@@ -957,9 +990,50 @@ impl SlideApp {
             }
             "view.collapseRibbon" => self.ui.ribbon_collapsed = !self.ui.ribbon_collapsed,
             "view.dark" => {
-                let on = self.flag(p, self.ui.brightness == theme::Brightness::Dark);
+                let on = self.flag(p, self.ui.brightness.is_dark());
                 self.ui.brightness = if on { theme::Brightness::Dark } else { theme::Brightness::Light };
                 self.restyle = true;
+            }
+            "app.exportAs" => {
+                let format = p.get("format").and_then(Value::as_str).ok_or("missing `format`")?.to_string();
+                if self.session.active().is_none() {
+                    return Err("no presentation open".into());
+                }
+                return Ok(json!({"started": self.export_as(&format, p.clone())}));
+            }
+            "app.rename" => {
+                // The page stored the presentation under this name (AI-PowerPoint's files).
+                let name = p.get("name").and_then(Value::as_str).map(str::trim).filter(|n| !n.is_empty()).ok_or("missing `name`")?;
+                let stem: String = name.trim_end_matches(".pptx").trim_end_matches(".deckcraft").chars().take(200).collect();
+                let d = self.session.active_mut().ok_or("no presentation open")?;
+                d.title = stem.clone();
+                d.path = None;
+                if p.get("saved").and_then(Value::as_bool).unwrap_or(false) {
+                    d.saved_doc = d.doc.clone();
+                }
+                return Ok(json!({"title": stem}));
+            }
+            "ui.language" => {
+                if let Some(v) = p.get("value").and_then(Value::as_str) {
+                    match v.trim().to_ascii_lowercase().as_str() {
+                        "ru" | "ru-ru" | "russian" => i18n::set_russian(true),
+                        "en" | "en-us" | "english" => i18n::set_russian(false),
+                        other => return Err(format!("unknown language {other:?}; use ru or en")),
+                    }
+                }
+                return Ok(json!({"language": if i18n::russian() { "ru" } else { "en" }}));
+            }
+            "ui.theme" => {
+                if let Some(v) = p.get("value").and_then(Value::as_str) {
+                    match theme::Brightness::from_code(v) {
+                        Some(b) => {
+                            self.ui.brightness = b;
+                            self.restyle = true;
+                        }
+                        None => return Err(format!("unknown theme {v:?}; use brand, light or dark")),
+                    }
+                }
+                return Ok(json!({"theme": self.ui.brightness.code()}));
             }
             "view.grayscale" => self.ui.grayscale = self.flag(p, self.ui.grayscale),
             "view.newWindow" => return doc_window::command(self, p),
@@ -1070,7 +1144,8 @@ impl SlideApp {
             }
             "app.links" => {
                 use deckcraft_engine::links::*;
-                return Ok(json!({"discord": DISCORD, "website": WEBSITE, "apps": APPS, "appPage": APP_PAGE, "github": GITHUB}));
+                // AI-PowerPoint has no community links; only where it comes from.
+                return Ok(json!({"upstream": GITHUB}));
             }
             _ => return Err(format!("unknown UI command `{id}`")),
         }
@@ -1329,6 +1404,16 @@ impl SlideApp {
     }
 
     pub fn save_as_dialog(&mut self, format: &str) {
+        self.save_as_named(format, true);
+    }
+
+    /// Save As (`named`) or the first Save of an untitled presentation. On the web with a page
+    /// that keeps saves (AI-PowerPoint), the bytes go to the page, which stores them in the user's
+    /// files on the server; otherwise they download.
+    fn save_as_named(&mut self, format: &str, named: bool) {
+        if self.services.pick_save.is_none() && self.save_to_page(format, named) {
+            return;
+        }
         let name = self.session.active().map(|d| d.title()).unwrap_or_else(|| "Presentation".into());
         let ext = if format == "pptx" { "pptx" } else { "deckcraft" };
         let suggested = format!("{name}.{ext}");
@@ -1373,8 +1458,49 @@ impl SlideApp {
                 Ok(_) => self.set_status("Saved"),
                 Err(e) => self.set_status(e.to_string()),
             }
+        } else if self.pick_save_missing() && self.save_to_page("pptx", false) {
+            // AI-PowerPoint: Save hands the presentation, as PowerPoint .pptx, to the page.
         } else {
             self.save_as_dialog("deckcraft");
+        }
+    }
+
+    fn pick_save_missing(&self) -> bool {
+        self.services.pick_save.is_none()
+    }
+
+    /// Hand the active presentation to the page's `save_to_page` hook as `format` (pptx unless
+    /// .deckcraft is asked for). True when the page took it (the presentation then counts as
+    /// saved); false when there is no such page, so the caller downloads as before.
+    pub fn save_to_page(&mut self, format: &str, named: bool) -> bool {
+        if self.services.save_to_page.is_none() {
+            return false;
+        }
+        let Some(d) = self.session.active() else { return false };
+        let ext = if format == "deckcraft" { "deckcraft" } else { "pptx" };
+        let name = format!("{}.{ext}", d.title());
+        let path = d.path.clone();
+        let bytes = match deckcraft_engine::cmd::file::save_bytes(&d.doc, ext) {
+            Ok(b) => b,
+            Err(e) => {
+                self.set_status(e.to_string());
+                return true;
+            }
+        };
+        let Some(hook) = self.services.save_to_page.as_ref() else { return false };
+        match hook(&name, path.as_deref(), &bytes, named) {
+            Ok(true) => {
+                if let Some(d) = self.session.active_mut() {
+                    d.saved_doc = d.doc.clone();
+                }
+                self.set_status(crate::i18n::fmt("Saving {name}…", &[("name", &name)]));
+                true
+            }
+            Ok(false) => false,
+            Err(e) => {
+                self.set_status(crate::i18n::fmt("Couldn't save {name}: {error}", &[("name", &name), ("error", &e)]));
+                true
+            }
         }
     }
 
@@ -1391,7 +1517,7 @@ impl SlideApp {
                 UiRequest::StartShow { from } => self.start_show(from, false),
                 UiRequest::Message { text } => self.set_status(text),
                 UiRequest::PickFile { purpose } => {
-                    if purpose == "saveAs" {
+                    if purpose == "saveAs" && !self.save_to_page("pptx", false) {
                         self.save_as_dialog("deckcraft");
                     }
                 }
@@ -1910,7 +2036,8 @@ impl SlideApp {
                     } else {
                         thumbs::show(self, ui);
                     }
-                    egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.canvas)).show(ui, |ui| {
+                    egui::CentralPanel::default().frame(egui::Frame::NONE).show(ui, |ui| {
+                        theme::paint_canvas_fill(ui.painter(), ui.max_rect(), t.canvas);
                         if self.ui.notes {
                             status::notes_pane(self, ui);
                         }

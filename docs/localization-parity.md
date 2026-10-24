@@ -3,7 +3,10 @@
 > **Last reviewed:** 2026-10-14 · **Last updated:** 2026-10-14 · **Change:** minor (IME composition underlined in table cells; previous: minor, IME composition and CJK interface text, #101; previous: major, created) · **Target:** Microsoft PowerPoint for Mac 16.113 (Microsoft 365)
 
 DeckCraft's interface is English only today: strings are literals in the UI and engine code, with
-no catalog and no language switch. Requests: #15 (follow the system language), #30 and PR #34
+no catalog and no language switch. **AI-PowerPoint (this fork)** adds a Russian catalog: `crates/ui-egui/i18n/ru.tsv`
+(~1,400 rows: ribbon, tabs, menus, File view, dialogs, panes, status bar, command labels), looked
+up where text is drawn (`crates/ui-egui/src/i18n.rs`, `tl!`), switched with `ui.language`; empty
+placeholders prompt in Russian too. Engine error messages stay English. Requests: #15 (follow the system language), #30 and PR #34
 (Ukrainian, open). Dimension score: **~8% ready** (estimated: English complete, slide-text script
 support partly there), **55–90 h** to parity plus native-speaker review.
 

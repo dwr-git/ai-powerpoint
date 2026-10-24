@@ -3,13 +3,60 @@
 use egui::{Color32, CornerRadius, FontData, FontDefinitions, FontFamily, Stroke, Visuals};
 use serde::{Deserialize, Serialize};
 
+/// The interface theme. AI-PowerPoint starts in `Brand` (navy chrome, the brand's blue-violet
+/// accent, solid black menus and windows, the brand backdrop round the slide); `Light` and `Dark`
+/// are the neumorphic panel palettes. Slides stay as the presentation draws them in every theme.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Brightness {
     #[default]
     Light,
     Dark,
+    Brand,
 }
+
+impl Brightness {
+    /// In menu order.
+    pub const ALL: [Brightness; 3] = [Brightness::Brand, Brightness::Light, Brightness::Dark];
+
+    /// The value the `ui.theme` command takes and reports.
+    pub fn code(self) -> &'static str {
+        match self {
+            Brightness::Light => "light",
+            Brightness::Dark => "dark",
+            Brightness::Brand => "brand",
+        }
+    }
+
+    pub fn from_code(code: &str) -> Option<Brightness> {
+        Brightness::ALL.into_iter().find(|b| b.code().eq_ignore_ascii_case(code.trim()))
+    }
+
+    /// The English label (translated where shown).
+    pub fn label(self) -> &'static str {
+        match self {
+            Brightness::Light => "Light",
+            Brightness::Dark => "Dark",
+            Brightness::Brand => "Brand",
+        }
+    }
+
+    /// Whether the interface is drawn with egui's dark visuals (Dark and Brand).
+    pub fn is_dark(self) -> bool {
+        !matches!(self, Brightness::Light)
+    }
+}
+
+/// Whether the Brand palette is the one installed as egui's dark visuals ([`apply`]).
+static BRAND: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+
+/// The Brand theme is showing.
+pub fn brand_on() -> bool {
+    BRAND.load(std::sync::atomic::Ordering::Relaxed)
+}
+
+/// The colour the Brand backdrop reads as: the canvas token of the Brand theme.
+pub const BRAND_CANVAS: Color32 = Color32::from_rgb(0x16, 0x18, 0x2C);
 
 /// Every colour the chrome uses.
 #[derive(Clone, Copy, Debug)]
@@ -53,83 +100,130 @@ pub struct Tokens {
 }
 
 impl Tokens {
+    /// Light: the neumorphic light panels (cool blue-grey chrome and cards, a blue accent).
     pub fn light() -> Self {
+        let c = Color32::from_rgb;
         Tokens {
             dark: false,
-            chrome: Color32::from_rgb(0xF5, 0xF5, 0xF5),
-            card: Color32::WHITE,
-            card_border: Color32::from_rgb(0xE3, 0xE3, 0xE3),
-            text_field: Color32::from_rgb(0xEB, 0xEB, 0xEB),
-            canvas: Color32::from_rgb(0xF0, 0xF0, 0xF0),
-            text: Color32::from_rgb(0x24, 0x24, 0x24),
-            text_dim: Color32::from_rgb(0x5C, 0x5C, 0x5C),
-            text_faint: Color32::from_rgb(0x99, 0x99, 0x99),
-            border: Color32::from_rgb(0xD6, 0xD6, 0xD6),
-            separator: Color32::from_rgb(0xE1, 0xE1, 0xE1),
-            hover: Color32::from_rgb(0xEB, 0xEB, 0xEB),
-            pressed: Color32::from_rgb(0xDE, 0xDE, 0xDE),
-            selected: Color32::from_rgb(0xE6, 0xE6, 0xE6),
-            accent: Color32::from_rgb(0xD9, 0x5A, 0x1A),
+            chrome: c(0xE4, 0xEC, 0xF6),
+            card: c(0xE6, 0xEE, 0xF8),
+            card_border: c(0xD0, 0xDB, 0xEA),
+            text_field: c(0xDC, 0xE6, 0xF3),
+            canvas: c(0xD6, 0xE0, 0xED),
+            text: c(0x1E, 0x2C, 0x42),
+            text_dim: c(0x34, 0x44, 0x5E),
+            text_faint: c(0x4E, 0x5E, 0x78),
+            border: c(0xB4, 0xC3, 0xD8),
+            separator: c(0xD0, 0xDB, 0xEA),
+            hover: c(0xD9, 0xE3, 0xF1),
+            pressed: c(0xCC, 0xD9, 0xEB),
+            selected: c(0xD3, 0xE2, 0xF8),
+            accent: c(0x34, 0x80, 0xE2),
             accent_text: Color32::WHITE,
-            contextual: Color32::from_rgb(0xC2, 0x4E, 0x14),
-            selection: Color32::from_rgb(0x7A, 0x7A, 0x7A),
+            contextual: c(0x16, 0x52, 0xA8),
+            selection: c(0x5A, 0x6B, 0x85),
             handle_fill: Color32::WHITE,
-            handle_stroke: Color32::from_rgb(0x6E, 0x6E, 0x6E),
-            guide: Color32::from_rgb(0xE8, 0x5D, 0x2A),
+            handle_stroke: c(0x34, 0x80, 0xE2),
+            guide: c(0xD6, 0x3C, 0x7A),
             caret: Color32::BLACK,
-            text_selection: Color32::from_rgba_unmultiplied(0x5A, 0x8F, 0xE0, 90),
-            field_bg: Color32::WHITE,
-            control: Color32::from_rgb(0xD6, 0xD6, 0xD6),
-            control_hover: Color32::from_rgb(0xC8, 0xC8, 0xC8),
-            control_pressed: Color32::from_rgb(0xBC, 0xBC, 0xBC),
-            shadow: Color32::from_black_alpha(28),
+            text_selection: Color32::from_rgba_unmultiplied(0x34, 0x80, 0xE2, 80),
+            field_bg: c(0xF4, 0xF7, 0xFC),
+            control: c(0xBA, 0xC8, 0xDC),
+            control_hover: c(0xAE, 0xBD, 0xD3),
+            control_pressed: c(0xA2, 0xB2, 0xCA),
+            shadow: Color32::from_rgba_unmultiplied(0x46, 0x5A, 0x82, 56),
         }
     }
+    /// Dark: the neumorphic dark panels (slate chrome and cards, a light blue accent with dark text
+    /// on it).
     pub fn dark() -> Self {
+        let c = Color32::from_rgb;
         Tokens {
             dark: true,
-            chrome: Color32::from_rgb(0x26, 0x26, 0x26),
-            card: Color32::from_rgb(0x33, 0x33, 0x33),
-            card_border: Color32::from_rgb(0x44, 0x44, 0x44),
-            text_field: Color32::from_rgb(0x2A, 0x2A, 0x2A),
-            canvas: Color32::from_rgb(0x1E, 0x1E, 0x1E),
-            text: Color32::from_rgb(0xEE, 0xEE, 0xEE),
-            text_dim: Color32::from_rgb(0xBB, 0xBB, 0xBB),
-            text_faint: Color32::from_rgb(0x88, 0x88, 0x88),
-            border: Color32::from_rgb(0x4A, 0x4A, 0x4A),
-            separator: Color32::from_rgb(0x48, 0x48, 0x48),
-            hover: Color32::from_rgb(0x40, 0x40, 0x40),
-            pressed: Color32::from_rgb(0x4C, 0x4C, 0x4C),
-            selected: Color32::from_rgb(0x47, 0x47, 0x47),
-            accent: Color32::from_rgb(0xF2, 0x6B, 0x1D),
-            accent_text: Color32::WHITE,
-            contextual: Color32::from_rgb(0xF5, 0x8A, 0x4B),
-            selection: Color32::from_rgb(0xAA, 0xAA, 0xAA),
+            chrome: c(0x26, 0x2D, 0x3A),
+            card: c(0x28, 0x2F, 0x3D),
+            card_border: c(0x36, 0x3F, 0x50),
+            text_field: c(0x20, 0x26, 0x32),
+            canvas: c(0x1B, 0x20, 0x2A),
+            text: c(0xE4, 0xEB, 0xF6),
+            text_dim: c(0xC4, 0xCF, 0xE0),
+            text_faint: c(0xA0, 0xAD, 0xC2),
+            border: c(0x4A, 0x56, 0x6C),
+            separator: c(0x36, 0x3F, 0x50),
+            hover: c(0x34, 0x3E, 0x50),
+            pressed: c(0x3E, 0x4A, 0x60),
+            selected: c(0x25, 0x37, 0x56),
+            accent: c(0x5C, 0xA8, 0xFF),
+            accent_text: c(0x0E, 0x1A, 0x2C),
+            contextual: c(0x8E, 0xC6, 0xFF),
+            selection: c(0xA0, 0xAD, 0xC2),
             handle_fill: Color32::WHITE,
-            handle_stroke: Color32::from_rgb(0x6E, 0x6E, 0x6E),
-            guide: Color32::from_rgb(0xF2, 0x8A, 0x4B),
+            handle_stroke: c(0x5C, 0xA8, 0xFF),
+            guide: c(0xFF, 0x77, 0xC6),
             caret: Color32::BLACK,
-            text_selection: Color32::from_rgba_unmultiplied(0x5A, 0x8F, 0xE0, 90),
-            field_bg: Color32::from_rgb(0x2A, 0x2A, 0x2A),
-            control: Color32::from_rgb(0x2A, 0x2A, 0x2A),
-            control_hover: Color32::from_rgb(0x40, 0x40, 0x40),
-            control_pressed: Color32::from_rgb(0x4C, 0x4C, 0x4C),
-            shadow: Color32::from_black_alpha(90),
+            text_selection: Color32::from_rgba_unmultiplied(0x5C, 0xA8, 0xFF, 90),
+            field_bg: c(0x20, 0x26, 0x32),
+            control: c(0x20, 0x26, 0x32),
+            control_hover: c(0x34, 0x3E, 0x50),
+            control_pressed: c(0x3E, 0x4A, 0x60),
+            shadow: Color32::from_black_alpha(110),
+        }
+    }
+    /// Brand: navy chrome, the brand's blue-violet accent (#667EEA), and the brand backdrop
+    /// ([`paint_brand_backdrop`]) round the slide. Menus and windows are solid black ([`apply`]).
+    pub fn brand() -> Self {
+        let c = Color32::from_rgb;
+        Tokens {
+            dark: true,
+            chrome: c(0x0C, 0x0D, 0x17),
+            card: c(0x14, 0x15, 0x26),
+            card_border: c(0x2A, 0x2D, 0x46),
+            text_field: c(0x1F, 0x22, 0x38),
+            canvas: BRAND_CANVAS,
+            text: Color32::WHITE,
+            text_dim: c(0xB7, 0xBB, 0xD8),
+            text_faint: c(0x8C, 0x91, 0xB4),
+            border: c(0x3A, 0x3E, 0x5E),
+            separator: c(0x2A, 0x2D, 0x46),
+            hover: c(0x22, 0x25, 0x3E),
+            pressed: c(0x2D, 0x31, 0x52),
+            selected: c(0x2A, 0x30, 0x66),
+            accent: c(0x66, 0x7E, 0xEA),
+            accent_text: c(0x0B, 0x0D, 0x1F),
+            contextual: c(0xA9, 0xB4, 0xFF),
+            selection: c(0xA9, 0xB4, 0xFF),
+            handle_fill: Color32::WHITE,
+            handle_stroke: c(0x66, 0x7E, 0xEA),
+            guide: c(0xFF, 0x77, 0xC6),
+            caret: Color32::BLACK,
+            text_selection: Color32::from_rgba_unmultiplied(0x66, 0x7E, 0xEA, 100),
+            field_bg: c(0x1F, 0x22, 0x38),
+            control: c(0x2A, 0x2D, 0x46),
+            control_hover: c(0x3A, 0x3E, 0x5E),
+            control_pressed: c(0x4A, 0x4F, 0x75),
+            shadow: Color32::BLACK,
         }
     }
     pub fn for_brightness(b: Brightness) -> Self {
         match b {
             Brightness::Light => Self::light(),
             Brightness::Dark => Self::dark(),
+            Brightness::Brand => Self::brand(),
         }
     }
     pub fn get(ctx: &egui::Context) -> Self {
-        if ctx.global_style().visuals.dark_mode { Self::dark() } else { Self::light() }
+        if ctx.global_style().visuals.dark_mode {
+            if brand_on() { Self::brand() } else { Self::dark() }
+        } else {
+            Self::light()
+        }
     }
 }
 
 /// Apply tokens to egui's style.
 pub fn apply(ctx: &egui::Context, t: &Tokens) {
+    let brand = t.canvas == BRAND_CANVAS;
+    BRAND.store(brand, std::sync::atomic::Ordering::Relaxed);
     let mut v = if t.dark { Visuals::dark() } else { Visuals::light() };
     v.panel_fill = t.chrome;
     v.window_fill = t.card;
@@ -158,6 +252,13 @@ pub fn apply(ctx: &egui::Context, t: &Tokens) {
     v.widgets.open.weak_bg_fill = t.pressed;
     v.window_shadow = egui::epaint::Shadow { offset: [0, 4], blur: 18, spread: 0, color: t.shadow };
     v.popup_shadow = egui::epaint::Shadow { offset: [0, 3], blur: 12, spread: 0, color: t.shadow };
+    if brand {
+        // Brand: menus, popups and windows are solid black blocks with a strong black shadow.
+        v.window_fill = Color32::BLACK;
+        v.window_stroke = Stroke::new(1.0, t.card_border);
+        v.popup_shadow = egui::epaint::Shadow { offset: [0, 8], blur: 32, spread: 0, color: Color32::BLACK };
+        v.window_shadow = egui::epaint::Shadow { offset: [0, 10], blur: 36, spread: 2, color: Color32::BLACK };
+    }
     ctx.set_visuals(v);
     ctx.global_style_mut(|s| {
         s.spacing.item_spacing = egui::vec2(6.0, 4.0);
@@ -234,6 +335,72 @@ pub fn add_fallback_faces(defs: &mut FontDefinitions, faces: &[std::sync::Arc<de
         for list in defs.families.values_mut() {
             list.push(name.clone());
         }
+    }
+}
+
+/// The Brand theme's backdrop round the slide: the brand gradient (#0A0A0F → #1A1A2E → #16213E at
+/// 135°), three soft glows, a 30-point grid of faint white lines and an inner shadow at the edges.
+pub fn paint_brand_backdrop(painter: &egui::Painter, rect: egui::Rect) {
+    use egui::epaint::{Mesh, Vertex, WHITE_UV};
+    if !rect.is_positive() || !rect.is_finite() {
+        return;
+    }
+    let vertex = |pos: egui::Pos2, color: Color32| Vertex { pos, uv: WHITE_UV, color };
+    let quad = |m: &mut Mesh, corners: [(egui::Pos2, Color32); 4]| {
+        let base = m.vertices.len() as u32;
+        m.vertices.extend(corners.iter().map(|(p, c)| vertex(*p, *c)));
+        m.indices.extend([base, base + 1, base + 2, base, base + 2, base + 3]);
+    };
+    let (a, mid, b) = (Color32::from_rgb(0x0A, 0x0A, 0x0F), Color32::from_rgb(0x1A, 0x1A, 0x2E), Color32::from_rgb(0x16, 0x21, 0x3E));
+    let mut m = Mesh::default();
+    quad(&mut m, [(rect.left_top(), a), (rect.right_top(), mid), (rect.right_bottom(), b), (rect.left_bottom(), mid)]);
+    painter.add(egui::Shape::mesh(m));
+    for (fx, fy, rgb, alpha) in [(0.2_f32, 0.8_f32, (120, 119, 198), 0.30_f32), (0.8, 0.2, (255, 119, 198), 0.30), (0.4, 0.4, (120, 219, 255), 0.20)] {
+        let c = rect.min + egui::vec2(rect.width() * fx, rect.height() * fy);
+        let far = egui::vec2(rect.width() * fx.max(1.0 - fx), rect.height() * fy.max(1.0 - fy)).length();
+        let reach = far * 0.5;
+        let inner = Color32::from_rgba_unmultiplied(rgb.0, rgb.1, rgb.2, (alpha * 255.0) as u8);
+        let mut g = Mesh::default();
+        g.vertices.push(vertex(c, inner));
+        const STEPS: u32 = 64;
+        for i in 0..=STEPS {
+            let angle = std::f32::consts::TAU * i as f32 / STEPS as f32;
+            g.vertices.push(vertex(c + egui::vec2(angle.cos(), angle.sin()) * reach, Color32::TRANSPARENT));
+        }
+        for i in 1..=STEPS {
+            g.indices.extend([0, i, i + 1]);
+        }
+        painter.add(egui::Shape::mesh(g));
+    }
+    let line = Stroke::new(1.0, Color32::from_rgba_unmultiplied(255, 255, 255, 13));
+    let mut x = rect.left() + 0.5;
+    while x < rect.right() {
+        painter.vline(x, rect.y_range(), line);
+        x += 30.0;
+    }
+    let mut y = rect.top() + 0.5;
+    while y < rect.bottom() {
+        painter.hline(rect.x_range(), y, line);
+        y += 30.0;
+    }
+    let dark = |a: f32| Color32::from_rgba_unmultiplied(0, 0, 0, (a * 153.0) as u8);
+    let mut sh = Mesh::default();
+    let r = rect;
+    for (i0, i1, a0, a1) in [(0.0_f32, 10.0_f32, 1.0_f32, 0.75_f32), (10.0, 45.0, 0.75, 0.0)] {
+        quad(&mut sh, [(egui::pos2(r.left(), r.top() + i0), dark(a0)), (egui::pos2(r.right(), r.top() + i0), dark(a0)), (egui::pos2(r.right(), r.top() + i1), dark(a1)), (egui::pos2(r.left(), r.top() + i1), dark(a1))]);
+        quad(&mut sh, [(egui::pos2(r.left(), r.bottom() - i1), dark(a1)), (egui::pos2(r.right(), r.bottom() - i1), dark(a1)), (egui::pos2(r.right(), r.bottom() - i0), dark(a0)), (egui::pos2(r.left(), r.bottom() - i0), dark(a0))]);
+        quad(&mut sh, [(egui::pos2(r.left() + i0, r.top()), dark(a0)), (egui::pos2(r.left() + i1, r.top()), dark(a1)), (egui::pos2(r.left() + i1, r.bottom()), dark(a1)), (egui::pos2(r.left() + i0, r.bottom()), dark(a0))]);
+        quad(&mut sh, [(egui::pos2(r.right() - i1, r.top()), dark(a1)), (egui::pos2(r.right() - i0, r.top()), dark(a0)), (egui::pos2(r.right() - i0, r.bottom()), dark(a0)), (egui::pos2(r.right() - i1, r.bottom()), dark(a1))]);
+    }
+    painter.add(egui::Shape::mesh(sh));
+}
+
+/// The area round the slide: the brand backdrop in the Brand theme, else `fill`.
+pub fn paint_canvas_fill(painter: &egui::Painter, rect: egui::Rect, fill: Color32) {
+    if fill == BRAND_CANVAS {
+        paint_brand_backdrop(painter, rect);
+    } else {
+        painter.rect_filled(rect, 0.0, fill);
     }
 }
 

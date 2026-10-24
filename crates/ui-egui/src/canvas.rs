@@ -153,7 +153,7 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
     });
     if st.doc.slides.is_empty() && st.selection.target == Target::Slides {
         let resp = ui.allocate_rect(avail, Sense::click());
-        ui.painter().text(avail.center(), Align2::CENTER_CENTER, "Click to add first slide", theme::font(22.0), t.text_dim);
+        ui.painter().text(avail.center(), Align2::CENTER_CENTER, tl!("Click to add first slide"), theme::font(22.0), t.text_dim);
         if resp.clicked() {
             let _ = app.run("slide.new", json!({"layout": "title"}));
         }
@@ -363,6 +363,7 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
         overlays(app, ui, &painter, xf, &t);
         ime_output(app, ui, xf);
         media_bar(app, ui, xf);
+        ai_chip(app, ui, xf, avail);
         gif_buttons(app, ui, xf, &gifs);
         if resp.secondary_clicked()
             && let Some(p) = resp.interact_pointer_pos()
@@ -514,6 +515,79 @@ fn media_frames(app: &SlideApp, painter: &egui::Painter, xf: Xf) {
 
 /// The play/pause and timeline bar under a selected audio or video (PowerPoint shows it on
 /// selection or hover).
+/// Width and height of the AI chip beside the selection (AI-PowerPoint on the web).
+const AI_CHIP_W: f32 = 58.0;
+const AI_CHIP_H: f32 = 26.0;
+
+/// Where the AI chip sits: right of the selection's box, level with its top; left of it when the
+/// viewport has no room on the right; kept inside the viewport. Pure geometry.
+pub fn ai_chip_rect(target: Rect, viewport: Rect) -> Rect {
+    let size = vec2(AI_CHIP_W, AI_CHIP_H);
+    let right = Rect::from_min_size(pos2(target.max.x + 8.0, target.min.y), size);
+    let mut r = if right.max.x <= viewport.max.x { right } else { Rect::from_min_size(pos2(target.min.x - 8.0 - AI_CHIP_W, target.min.y), size) };
+    let dx = (viewport.min.x - r.min.x).max(0.0) - (r.max.x - viewport.max.x).max(0.0);
+    let dy = (viewport.min.y - r.min.y).max(0.0) - (r.max.y - viewport.max.y).max(0.0);
+    r = r.translate(vec2(dx, dy));
+    r
+}
+
+/// The selection the AI chip is for: selected text being edited, or selected shapes with text.
+fn ai_target(app: &SlideApp, xf: Xf) -> Option<Rect> {
+    let st = app.session.active()?;
+    if st.selection.target != Target::Slides {
+        return None;
+    }
+    if let Some(ts) = &st.selection.text {
+        if ts.notes || !ts.is_range() {
+            return None;
+        }
+        let sh = st.shape(ts.shape)?;
+        return Some(screen_rect(xf, &deckcraft_engine::cmd::xfrm_of(&st.doc, &st.selection, sh)));
+    }
+    let mut out: Option<Rect> = None;
+    for id in &st.selection.shapes {
+        let Some(sh) = st.shape(*id) else { continue };
+        let has_text = sh.text.as_ref().is_some_and(|t| !t.text().trim().is_empty()) || matches!(sh.kind, deckcraft_model::ShapeKind::Table(_));
+        if !has_text {
+            continue;
+        }
+        let r = screen_rect(xf, &deckcraft_engine::cmd::xfrm_of(&st.doc, &st.selection, sh));
+        out = Some(out.map_or(r, |o| o.union(r)));
+    }
+    out
+}
+
+/// The AI chip: opens the page's AI menu for the selected text or shapes, just below the chip.
+fn ai_chip(app: &mut SlideApp, ui: &mut Ui, xf: Xf, viewport: Rect) {
+    if app.services.ai_assist.is_none() || app.session.tool.dragging() {
+        return;
+    }
+    let Some(target) = ai_target(app, xf) else { return };
+    if !target.is_finite() {
+        return;
+    }
+    let chip = ai_chip_rect(target, viewport);
+    if !chip.intersects(viewport) {
+        return;
+    }
+    let t = Tokens::get(ui.ctx());
+    let resp = ui.interact(chip, ui.id().with("ai_chip"), Sense::click());
+    let resp = resp.on_hover_text(tl!("AI Assistant: improve, shorten, translate, speaker notes")).on_hover_cursor(egui::CursorIcon::PointingHand);
+    resp.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, true, tl!("AI Assistant")));
+    let painter = ui.painter().with_clip_rect(viewport);
+    let radius = CornerRadius::same((AI_CHIP_H / 2.0) as u8);
+    painter.rect_filled(chip.translate(vec2(0.0, 2.0)), radius, t.shadow);
+    let fill = if resp.hovered() { t.contextual } else { t.accent };
+    painter.rect_filled(chip, radius, fill);
+    crate::icons::paint(&painter, Rect::from_center_size(pos2(chip.min.x + 16.0, chip.center().y), vec2(16.0, 16.0)), crate::icons::Icon::Sparkle, t.accent_text, false);
+    painter.text(pos2(chip.min.x + 27.0, chip.center().y), Align2::LEFT_CENTER, tl!("AI"), theme::bold(12.5), t.accent_text);
+    if resp.clicked()
+        && let Some(open) = app.services.ai_assist.as_ref()
+    {
+        open(chip.min.x, chip.max.y + 6.0);
+    }
+}
+
 fn media_bar(app: &mut SlideApp, ui: &mut Ui, xf: Xf) {
     let Some(d) = app.session.active() else { return };
     let uid = d.uid;
@@ -1222,7 +1296,7 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
             if let Some((path, index)) = app.session.tool.edit_segment {
                 let cur = deckcraft_engine::cmd::points::segment_kind_of(&sh, path, index);
                 for (l, k) in [("Straight Segment", "straight"), ("Curved Segment", "curved")] {
-                    if ui.radio(cur == Some(k), l).clicked() {
+                    if ui.radio(cur == Some(k), tl!(l)).clicked() {
                         let _ = app.run("shape.segmentType", json!({"path": path, "segment": index, "type": k}));
                         ui.close();
                     }
@@ -1231,12 +1305,12 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
             } else if let Some((path, index)) = app.session.tool.edit_vertex {
                 let cur = deckcraft_engine::cmd::points::kind_of(&sh, path, index);
                 for (l, k) in [("Smooth Point", "smooth"), ("Straight Point", "straight"), ("Corner Point", "corner")] {
-                    if ui.radio(cur == Some(k), l).clicked() {
+                    if ui.radio(cur == Some(k), tl!(l)).clicked() {
                         let _ = app.run("shape.pointType", json!({"path": path, "index": index, "type": k}));
                         ui.close();
                     }
                 }
-                if ui.button("Delete Point").clicked() {
+                if ui.button(tl!("Delete Point")).clicked() {
                     let _ = app.run("shape.deletePoint", json!({"path": path, "index": index}));
                     app.session.tool.edit_vertex = None;
                     ui.close();
@@ -1245,7 +1319,7 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
                     Some(false) => ("Close Path", "shape.closePath"),
                     _ => ("Open Path", "shape.openPath"),
                 };
-                if ui.button(label).clicked() {
+                if ui.button(tl!(label)).clicked() {
                     let _ = app.run(id, json!({"path": path, "index": index}));
                     // The points are numbered from the new start now.
                     app.session.tool.edit_vertex = None;
@@ -1253,7 +1327,7 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
                 }
                 ui.separator();
             }
-            if ui.button("Exit Edit Points").clicked() {
+            if ui.button(tl!("Exit Edit Points")).clicked() {
                 let _ = app.run("shape.editPoints", json!({"on": false}));
                 ui.close();
             }
@@ -1262,7 +1336,7 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
         // A misspelt word under the pointer: its suggestions, then Ignore All and Add to Dictionary.
         if let Some(w) = app.squiggles.menu_word.clone() {
             if let Some(from) = w.delete_from {
-                if ui.button(egui::RichText::new("Delete Repeated Word").strong()).clicked() {
+                if ui.button(egui::RichText::new(tl!("Delete Repeated Word")).strong()).clicked() {
                     let cut: String = format!("{}{}", " ".repeat(w.start - from), w.word);
                     // The gap is spaces; take it from the text so tabs or no-break spaces match.
                     let gap = app
@@ -1299,7 +1373,7 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
                     ui.close();
                 }
             } else if w.suggestions.is_empty() {
-                ui.label(egui::RichText::new("(no spelling suggestions)").weak());
+                ui.label(egui::RichText::new(tl!("(no spelling suggestions)")).weak());
             }
             for to in &w.suggestions {
                 if ui.button(egui::RichText::new(to).strong()).clicked() {
@@ -1315,12 +1389,12 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
                     ui.close();
                 }
             }
-            if ui.button("Ignore All").clicked() {
+            if ui.button(tl!("Ignore All")).clicked() {
                 app.squiggles.ignore(&w.word);
                 app.squiggles.menu_word = None;
                 ui.close();
             }
-            if ui.button("Add to Dictionary").clicked() {
+            if ui.button(tl!("Add to Dictionary")).clicked() {
                 if let Err(e) = app.session.execute("review.addToDictionary", &json!({"word": w.word})) {
                     app.set_status(e.to_string());
                 }
@@ -1329,9 +1403,21 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
             }
             ui.separator();
         }
+        // AI-PowerPoint on the web: the AI menu for the selected text or shapes (or the slide).
+        if app.services.ai_assist.is_some() {
+            let label = egui::RichText::new(tl!("AI Assistant…")).strong();
+            if ui.button(label).on_hover_text(tl!("AI Assistant: improve, shorten, translate, speaker notes")).clicked() {
+                let at = ui.ctx().input(|i| i.pointer.interact_pos()).unwrap_or_else(|| ui.min_rect().left_top());
+                if let Some(open) = app.services.ai_assist.as_ref() {
+                    open(at.x, at.y);
+                }
+                ui.close();
+            }
+            ui.separator();
+        }
         let has_sel = app.session.active().is_some_and(|d| !d.selection.shapes.is_empty());
         for (l, id) in [("Cut", "edit.cut"), ("Copy", "edit.copy"), ("Paste", "edit.paste")] {
-            if ui.add_enabled(crate::ribbon::enabled(app, id), egui::Button::new(l)).clicked() {
+            if ui.add_enabled(crate::ribbon::enabled(app, id), egui::Button::new(tl!(l))).clicked() {
                 let _ = app.run(id, json!({}));
                 ui.close();
             }
@@ -1340,54 +1426,54 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
         // Right-clicking the text being edited keeps it (`PointerKind::ContextClick`): text items.
         let editing = app.session.active().is_some_and(|d| d.selection.text.as_ref().is_some_and(|t| !t.notes));
         if editing {
-            if ui.button("Paragraph…").clicked() {
+            if ui.button(tl!("Paragraph…")).clicked() {
                 app.dialog = Some(crate::dialogs::Dialog::new("paragraph"));
                 ui.close();
             }
             for (l, id) in [("Bullets", "format.bullets"), ("Numbering", "format.numbering")] {
-                if ui.add_enabled(crate::ribbon::enabled(app, id), egui::Button::new(l)).clicked() {
+                if ui.add_enabled(crate::ribbon::enabled(app, id), egui::Button::new(tl!(l))).clicked() {
                     let _ = app.run(id, json!({}));
                     ui.close();
                 }
             }
-            if ui.button("Link…").clicked() {
+            if ui.button(tl!("Link…")).clicked() {
                 app.dialog = Some(crate::dialogs::Dialog::new("hyperlink"));
                 ui.close();
             }
             ui.separator();
-            if ui.button("Format Shape…").clicked() {
+            if ui.button(tl!("Format Shape…")).clicked() {
                 let _ = app.run("view.pane", json!({"pane": "format"}));
                 ui.close();
             }
         } else if has_sel {
-            if ui.button("Edit Text").clicked() {
+            if ui.button(tl!("Edit Text")).clicked() {
                 let _ = app.run("text.edit", json!({}));
                 ui.close();
             }
             if crate::ribbon::enabled(app, "shape.editPoints")
                 && app.session.active().is_some_and(|d| d.selection.shapes.len() == 1 && d.selected_shapes().iter().all(|s| !s.is_line()))
-                && ui.button("Edit Points").clicked()
+                && ui.button(tl!("Edit Points")).clicked()
             {
                 let _ = app.run("shape.editPoints", json!({"on": true}));
                 ui.close();
             }
-            if ui.button("Font…").clicked() {
+            if ui.button(tl!("Font…")).clicked() {
                 let _ = app.run("format.fontDialog", json!({}));
                 ui.close();
             }
-            if ui.button("Paragraph…").clicked() {
+            if ui.button(tl!("Paragraph…")).clicked() {
                 let _ = app.run("format.paragraphDialog", json!({}));
                 ui.close();
             }
-            ui.menu_button("Bring to Front", |ui| {
+            ui.menu_button(tl!("Bring to Front"), |ui| {
                 crate::ribbon::menu_item(app, ui, crate::icons::Icon::BringToFront, "Bring to Front", "arrange.bringToFront", json!({}));
                 crate::ribbon::menu_item(app, ui, crate::icons::Icon::BringForward, "Bring Forward", "arrange.bringForward", json!({}));
             });
-            ui.menu_button("Send to Back", |ui| {
+            ui.menu_button(tl!("Send to Back"), |ui| {
                 crate::ribbon::menu_item(app, ui, crate::icons::Icon::SendToBack, "Send to Back", "arrange.sendToBack", json!({}));
                 crate::ribbon::menu_item(app, ui, crate::icons::Icon::SendBackward, "Send Backward", "arrange.sendBackward", json!({}));
             });
-            ui.menu_button("Group", |ui| {
+            ui.menu_button(tl!("Group"), |ui| {
                 crate::ribbon::menu_item(app, ui, crate::icons::Icon::Group, "Group", "arrange.group", json!({}));
                 crate::ribbon::menu_item(app, ui, crate::icons::Icon::Ungroup, "Ungroup", "arrange.ungroup", json!({}));
             });
@@ -1400,32 +1486,32 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
                 .session
                 .active()
                 .is_some_and(|d| d.selected_shapes().iter().any(|s| matches!(s.kind, deckcraft_model::ShapeKind::Picture { .. })));
-            if picture && ui.button("Change Picture…").clicked() {
+            if picture && ui.button(tl!("Change Picture…")).clicked() {
                 let _ = app.run("app.changePictureDialog", json!({}));
                 ui.close();
             }
-            if ui.button("Link…").clicked() {
+            if ui.button(tl!("Link…")).clicked() {
                 app.dialog = Some(crate::dialogs::Dialog::new("hyperlink"));
                 ui.close();
             }
-            if ui.button("Edit Alt Text…").clicked() {
+            if ui.button(tl!("Edit Alt Text…")).clicked() {
                 app.dialog = Some(crate::dialogs::Dialog::new("altText"));
                 ui.close();
             }
-            if ui.button("Set as Default Shape").clicked() {
+            if ui.button(tl!("Set as Default Shape")).clicked() {
                 let _ = app.run("shape.setDefault", json!({}));
                 ui.close();
             }
-            if ui.button("Size and Position…").clicked() {
+            if ui.button(tl!("Size and Position…")).clicked() {
                 let _ = app.run("shape.sizePosition", json!({}));
                 ui.close();
             }
-            if ui.button("Format Shape…").clicked() {
+            if ui.button(tl!("Format Shape…")).clicked() {
                 let _ = app.run("view.pane", json!({"pane": "format"}));
                 ui.close();
             }
         } else {
-            ui.menu_button("Layout", |ui| {
+            ui.menu_button(tl!("Layout"), |ui| {
                 let layouts: Vec<(String, u32)> = app
                     .session
                     .active()
@@ -1438,28 +1524,28 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
                     }
                 }
             });
-            ui.menu_button("Grid and Guides", |ui| {
+            ui.menu_button(tl!("Grid and Guides"), |ui| {
                 let mut on = app.ui.guides;
-                if ui.checkbox(&mut on, "Guides").clicked() {
+                if ui.checkbox(&mut on, tl!("Guides")).clicked() {
                     let _ = app.run("view.guides", json!({"on": on}));
                 }
                 for (label, vertical) in [("Add Vertical Guide", true), ("Add Horizontal Guide", false)] {
-                    if ui.button(label).clicked() {
+                    if ui.button(tl!(label)).clicked() {
                         let _ = app.run("guide.add", json!({"vertical": vertical}));
                         let _ = app.run("view.guides", json!({"on": true}));
                         ui.close();
                     }
                 }
             });
-            if ui.button("Reset Slide").clicked() {
+            if ui.button(tl!("Reset Slide")).clicked() {
                 let _ = app.run("slide.reset", json!({}));
                 ui.close();
             }
-            if ui.button("Format Background…").clicked() {
+            if ui.button(tl!("Format Background…")).clicked() {
                 let _ = app.run("view.pane", json!({"pane": "background"}));
                 ui.close();
             }
-            if ui.button("New Comment").clicked() {
+            if ui.button(tl!("New Comment")).clicked() {
                 app.dialog = Some(crate::dialogs::Dialog::new("comment"));
                 ui.close();
             }
@@ -2083,12 +2169,18 @@ mod tests {
         let after = h.output().platform_output.cursor_icon;
         assert_eq!(after, egui::CursorIcon::Copy, "the animation painter arms the Copy cursor");
     }
+
+    #[test]
+    fn the_ai_chip_sits_right_of_the_selection_or_left_when_there_is_no_room() {
+        let viewport = Rect::from_min_max(pos2(0.0, 0.0), pos2(1000.0, 700.0));
+        let target = Rect::from_min_max(pos2(100.0, 50.0), pos2(400.0, 200.0));
+        let chip = super::ai_chip_rect(target, viewport);
+        assert!(chip.min.x > target.max.x && (chip.min.y - target.min.y).abs() < 1e-3);
+        let wide = Rect::from_min_max(pos2(600.0, 50.0), pos2(990.0, 200.0));
+        let chip = super::ai_chip_rect(wide, viewport);
+        assert!(chip.max.x < wide.min.x);
+        // A selection above the viewport keeps the chip in view.
+        let above = Rect::from_min_max(pos2(100.0, -300.0), pos2(400.0, -10.0));
+        assert!(viewport.contains_rect(super::ai_chip_rect(above, viewport)));
+    }
 }
-
-#[cfg(test)]
-#[path = "ruler_tests.rs"]
-mod ruler_tests;
-
-#[cfg(test)]
-#[path = "guides_tests.rs"]
-mod guides_tests;

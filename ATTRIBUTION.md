@@ -3,6 +3,7 @@
 Every asset DeckCraft includes, bundles, embeds at build time or shows in its documentation, with
 its author, source and licence. The policy is in [AGENTS.md](AGENTS.md) §1. `cargo xtask assets`
 fails if a file under `assets/`, `docs/images/` or `docs/brand/` is missing from this table.
+AI-PowerPoint (this fork) removed `docs/brand/` (the ArtCraft marks are not licensed to forks).
 
 DeckCraft contains **no Microsoft, Adobe, Avid or Autodesk iconography, images, fonts, themes,
 templates or other assets**. Its themes, colour schemes, layouts, preset-shape geometry, sample
@@ -14,11 +15,9 @@ artwork. The ribbon and menu icons stay original drawings.
 
 | Asset | Author | Source | Licence | Used for |
 |---|---|---|---|---|
-| `docs/brand/artcraft-logo.svg`, `docs/brand/artcraft-logo.png` | ArtCraft Team | ArtCraft brand kit (project owner) | ArtCraft trademark, `docs/brand/LICENSE-brand.txt` (not open source) | README header |
-| `docs/brand/artcraft-logo-white.svg`, `docs/brand/artcraft-logo-white.png` | ArtCraft Team | ArtCraft brand kit | ArtCraft trademark, `docs/brand/LICENSE-brand.txt` | README header (dark mode) |
-| `docs/brand/artcraft-mark.svg`, `docs/brand/artcraft-mark.png` | ArtCraft Team | ArtCraft brand kit | ArtCraft trademark, `docs/brand/LICENSE-brand.txt` | README footer, About |
-| `docs/brand/artcraft-mark-black.svg`, `docs/brand/artcraft-mark-black.png` | ArtCraft Team | ArtCraft brand kit | ArtCraft trademark, `docs/brand/LICENSE-brand.txt` | Mark for light backgrounds |
-| `docs/brand/LICENSE-brand.txt` | ArtCraft Team | craftrules `standards/license-files` | — (licence text) | Terms for the ArtCraft marks |
+| `studio/web/favicon.png`, `studio/web/apple-touch-icon.png` | AI-PowerPoint contributors | drawn for AI-PowerPoint (Pillow, original shapes) | MIT OR Apache-2.0 | Page icon: a slide with a chart in the frame the other AI- apps share |
+| `crates/ui-egui/i18n/ru.tsv` | craft-i18n contributors; AI-PowerPoint contributors | rows whose English matches storytold/craft-i18n `locales/ru` (rev 04600cb) were taken from it, the others written for AI-PowerPoint | MIT OR Apache-2.0 | The Russian interface |
+| Liberation Sans/Serif/Mono, Carlito, Caladea (`fonts/` of the packaged site) | Red Hat; Google (Łukasz Dziedzic; Andrés Torresi, Carolina Giovagnoli) | Ubuntu packages fonts-liberation, fonts-crosextra-carlito, fonts-crosextra-caladea, fetched in CI (`.github/workflows/studio.yml`), never committed | SIL OFL 1.1 (licence texts shipped next to the fonts) | Metric-compatible stand-ins for Arial, Times New Roman, Courier New, Calibri, Cambria |
 | `assets/app-icon/deckcraft-1024.png`, `assets/app-icon/hicolor/*/apps/ai.storyteller.deckcraft.png` | DeckCraft contributors | rendered by DeckCraft from `assets/app-icon/icon-source.deckcraft` (shapes only) | MIT OR Apache-2.0 | Placeholder app icon (presentation board) until the mascot icon is drawn |
 | `packaging/macos/dmg/background.svg` | @XusBadia | DeckCraft macOS DMG window background, original work for this repository (2026-10-08), derived from the DeckCraft app icon `assets/app-icon/deckcraft-1024.png` (referenced via `<image>`, not copied); text is outlined Inter / JetBrains Mono glyph paths | MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`) | Finder window of the macOS DMG; `packaging/macos/dmg/generate.py` renders it to `background.tiff` |
 | `packaging/macos/dmg/background.tiff` | @XusBadia | Rendered from `packaging/macos/dmg/background.svg` by `packaging/macos/dmg/generate.py` | MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`) | 1x + 2x HiDPI TIFF for the macOS DMG window; includes the app icon (see its row) and LittleCMS's built-in sRGB profile ("No copyright, use freely") |

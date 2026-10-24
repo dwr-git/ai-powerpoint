@@ -1,11 +1,12 @@
-DeckCraft
-Copyright (c) 2026 ArtCraft Team and the DeckCraft contributors.
+AI-PowerPoint
+Based on DeckCraft (https://github.com/storytold/slidecraft).
+Copyright (c) 2026 ArtCraft Team and the DeckCraft contributors; the AI-PowerPoint changes
+Copyright (c) 2026 the AI-PowerPoint contributors.
 Licensed under the MIT License or the Apache License, Version 2.0, at your option
 (LICENSE-MIT, LICENSE-APACHE).
 
-The ArtCraft name, wordmark and logos in docs/brand/ are trademarks of the ArtCraft Team. They are
-not open source and are not covered by the license above; their terms are in
-docs/brand/LICENSE-brand.txt.
+AI-PowerPoint does not include or use the ArtCraft name, wordmark or logos (the upstream
+docs/brand/ folder was removed: those marks are not licensed to forks).
 
 Third-party material
 
@@ -19,6 +20,12 @@ list (author, source, license) is in ATTRIBUTION.md.
   ATTRIBUTION.md (Inter, Carlito, Caladea, Liberation, Montserrat, Lato, Open Sans, Roboto,
   Merriweather, Playfair Display, Poppins, Nunito Sans, BIZ UD, Shippori Mincho, Noto Sans
   Arabic) under the SIL Open Font License 1.1; their licence texts ship with release packages.
+- The packaged site (studio/build/package.sh) ships Liberation Sans/Serif/Mono (Red Hat),
+  Carlito and Caladea (Google) in fonts/, from the Ubuntu packages fonts-liberation,
+  fonts-crosextra-carlito and fonts-crosextra-caladea, under the SIL Open Font License 1.1;
+  their copyright files ship next to them.
+- crates/ui-egui/i18n/ru.tsv takes the Russian rows whose English matches storytold/craft-i18n
+  (locales/ru, rev 04600cb, MIT OR Apache-2.0).
 - Lucide icon paths embedded in crates/engine/src/icon_data.rs (Insert › Icons), release 1.56.0,
   commit 440a1e1dfb1e712505308da46bead3c28b1f1398, https://github.com/lucide-icons/lucide.
   ISC License, Copyright (c) 2026 Lucide Icons and Contributors. Icons Lucide derives from Feather

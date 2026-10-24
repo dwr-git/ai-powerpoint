@@ -306,6 +306,8 @@ icons! {
     Collapse => "collapse",
     Expand => "expand",
     Pin => "pin",
+    /// The way back to the site the web editor lives on (AI-PowerPoint).
+    House => "house",
     // File tab (Backstage)
     BackCircle => "back-circle",
     SaveAs => "save-as",
@@ -1225,7 +1227,7 @@ fn draw(p: &Pen<'_>, icon: Icon) {
             p.arrow2((2.5, 20.0), (21.5, 20.0), B);
         }
         I::ChangeCase => {
-            p.text("A", (8.0, 11.0), 19.0, K);
+            p.text(tl!("A"), (8.0, 11.0), 19.0, K);
             p.text("a", (17.5, 12.5), 16.0, B);
             p.seg((3.0, 21.0), (21.0, 21.0), K.a(0.4));
         }
@@ -1240,7 +1242,7 @@ fn draw(p: &Pen<'_>, icon: Icon) {
             p.rect(2.5, 19.5, 21.5, 22.5, 0.8, R, N);
         }
         I::TextShadow => {
-            p.text("S", (14.0, 13.8), 22.0, K.a(0.3));
+            p.text(tl!("S"), (14.0, 13.8), 22.0, K.a(0.3));
             p.text_bold("S", (11.0, 11.0), 22.0, K);
         }
 
@@ -1564,7 +1566,7 @@ fn draw(p: &Pen<'_>, icon: Icon) {
         I::Themes => {
             p.rect(9.5, 2.5, 21.5, 14.5, 2.0, O, N);
             p.rect(2.5, 8.5, 15.0, 21.5, 2.0, B, N);
-            p.text("Aa", (8.75, 15.0), 10.0, W);
+            p.text(tl!("Aa"), (8.75, 15.0), 10.0, W);
         }
         I::Variants => {
             p.rect(8.0, 2.5, 21.5, 11.0, 1.2, t(PU), PU);
@@ -1579,7 +1581,7 @@ fn draw(p: &Pen<'_>, icon: Icon) {
             p.rect(3.0, 4.0, 21.0, 20.0, 0.0, N, K);
         }
         I::Fonts => {
-            p.text("A", (8.0, 11.0), 20.0, K);
+            p.text(tl!("A"), (8.0, 11.0), 20.0, K);
             p.text("g", (17.0, 10.0), 18.0, B);
         }
         I::BackgroundStyles => {
@@ -1732,7 +1734,7 @@ fn draw(p: &Pen<'_>, icon: Icon) {
 
         // ----- Review -----
         I::Spelling => {
-            p.text("abc", (11.5, 7.0), 12.0, K);
+            p.text(tl!("abc"), (11.5, 7.0), 12.0, K);
             p.line_w(&[(6.0, 16.0), (10.0, 20.0), (19.5, 11.0)], G, 1.3);
         }
         I::Thesaurus => {
@@ -2325,6 +2327,11 @@ fn draw(p: &Pen<'_>, icon: Icon) {
             p.rect(2.5, 4.0, 21.5, 20.0, 1.5, N, K);
             p.circle((16.0, 9.0), 1.8, N, K);
             p.line(&[(2.5, 17.5), (8.5, 11.0), (14.0, 16.5), (16.5, 14.0), (21.5, 18.5)], K);
+        }
+        I::House => {
+            p.line(&[(2.5, 11.5), (12.0, 3.0), (21.5, 11.5)], K);
+            p.rect(5.5, 9.5, 18.5, 20.5, 1.0, N, K);
+            p.rect(10.0, 14.0, 14.0, 20.5, 0.6, K, N);
         }
         I::Sparkle => {
             p.sparkle((10.5, 13.0), 9.0, PU);
