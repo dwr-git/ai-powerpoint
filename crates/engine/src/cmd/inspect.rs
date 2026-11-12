@@ -183,7 +183,8 @@ fn shape_texts(shapes: &[Shape], out: &mut Vec<(deckcraft_model::ShapeId, String
         match &sh.kind {
             ShapeKind::Group { children, .. } => shape_texts(children, out, depth + 1),
             ShapeKind::Table(t) => {
-                let rows: Vec<String> = t.rows.iter().map(|r| r.cells.iter().map(|c| c.text.text().replace('\n', " ")).collect::<Vec<_>>().join(" | ")).collect();
+                let rows: Vec<String> =
+                    t.rows.iter().map(|r| r.cells.iter().map(|c| c.text.text().replace('\n', " ")).collect::<Vec<_>>().join(" | ")).collect();
                 let text = rows.join("\n");
                 if !text.trim().is_empty() {
                     out.push((sh.id, sh.name.clone(), text));

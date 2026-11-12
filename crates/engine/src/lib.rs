@@ -458,6 +458,9 @@ pub struct Session {
     pub ui_requests: Vec<UiRequest>,
     pub tool: tools::ToolState,
     pub(crate) untitled: u32,
+    /// What new untitled presentations are called before their number (`Presentation1`); the
+    /// interface sets it in its own language (AI-PowerPoint: `Презентация1`).
+    pub untitled_stem: String,
     /// Format Painter: copied shape/text formatting and whether it stays on (double-click).
     pub painter: Option<(cmd::format::Painted, bool)>,
     /// Animation Painter: copied shape animations and whether it stays on (double-click).
@@ -502,6 +505,7 @@ impl Session {
             ui_requests: vec![],
             tool: tools::ToolState::default(),
             untitled: 0,
+            untitled_stem: "Presentation".to_string(),
             default_look: None,
             painter: None,
             anim_painter: None,
@@ -577,7 +581,8 @@ impl Session {
     }
     pub fn next_untitled(&mut self) -> String {
         self.untitled += 1;
-        format!("Presentation{}", self.untitled)
+        let stem = if self.untitled_stem.trim().is_empty() { "Presentation" } else { self.untitled_stem.trim() };
+        format!("{stem}{}", self.untitled)
     }
 
     /// Run command `id`. A panic inside it becomes [`EngineError::Internal`] and leaves the

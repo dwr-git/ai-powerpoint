@@ -50,7 +50,11 @@ pub fn start() {
                     let mut app = SlideApp::new(Session::new(), services(inbox.clone(), cc.egui_ctx.clone())).with_control(control);
                     // AI-PowerPoint: the Russian interface and the Brand theme (Light and Dark stay in
                     // File › Account and the assistant panel's theme menu; the choice is remembered).
-                    deckcraft_ui_egui::i18n::set_russian(!query().contains("lang=en"));
+                    let russian = !query().contains("lang=en");
+                    deckcraft_ui_egui::i18n::set_russian(russian);
+                    if russian {
+                        app.session.untitled_stem = "Презентация".to_string();
+                    }
                     app.ui.brightness = stored_theme().unwrap_or(deckcraft_ui_egui::theme::Brightness::Brand);
                     let q = query();
                     // A new blank presentation opens at once (`?sample` shows the sample deck instead).
