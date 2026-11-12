@@ -1,4 +1,4 @@
-//! AI-PowerPoint: the Russian interface, in a process of its own (the language is process-wide,
+//! AI Презентации: the Russian interface, in a process of its own (the language is process-wide,
 //! and the library's tests read the English labels).
 #![allow(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
 

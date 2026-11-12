@@ -120,7 +120,13 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
             "file.save" | "show.fromStart" | "review.spelling" | "app.find" => app.session.active().is_some(),
             id => crate::ribbon::enabled(app, id),
         };
-        let r = crate::widgets::icon_toggle(ui, q.icon(), &tip(q), en, on);
+        // On the web the house at the right end of the title bar leads back to the site, so the start
+        // screen's button here gets a grid: one house per bar.
+        let icon = match q.icon() {
+            Icon::Home if app.services.go_home.is_some() => Icon::Grid,
+            icon => icon,
+        };
+        let r = crate::widgets::icon_toggle(ui, icon, &tip(q), en, on);
         if r.clicked() {
             run(app, q);
         }

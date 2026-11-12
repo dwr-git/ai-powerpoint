@@ -76,7 +76,7 @@ pub fn title_bar(app: &mut SlideApp, ui: &mut Ui) {
         let dirty = app.session.active().is_some_and(|d| d.is_dirty());
         crate::qat::show(app, &mut child);
         let title =
-            app.session.active().map(|d| format!("{}{}", d.title(), if dirty { tl!(" — Edited") } else { "" })).unwrap_or_else(|| "AI-PowerPoint".into());
+            app.session.active().map(|d| format!("{}{}", d.title(), if dirty { tl!(" — Edited") } else { "" })).unwrap_or_else(|| "AI Презентации".into());
         ui.painter().text(rect.center(), Align2::CENTER_CENTER, title, theme::font(13.0), t.text);
         // Right side.
         let mut right = ui.new_child(
@@ -85,7 +85,7 @@ pub fn title_bar(app: &mut SlideApp, ui: &mut Ui) {
                 .layout(egui::Layout::right_to_left(egui::Align::Center)),
         );
         right.spacing_mut().item_spacing.x = 6.0;
-        // Web (AI-PowerPoint): the way back to the site, at the right end.
+        // Web (AI Презентации): the way back to the site, at the right end.
         if app.services.go_home.is_some() {
             let (r, resp) = right.allocate_exact_size(vec2(control_h + 8.0, control_h), Sense::click());
             let resp = resp.on_hover_text(tl!("To the site")).on_hover_cursor(egui::CursorIcon::PointingHand);
@@ -2167,7 +2167,7 @@ fn record(app: &mut SlideApp, ui: &mut Ui) {
             }
         }
     });
-    // AI-PowerPoint: no "Learn More" link to the upstream's website (the editor works offline).
+    // AI Презентации: no "Learn More" link to the upstream's website (the editor works offline).
 }
 
 fn comment_nav(app: &mut SlideApp, ui: &mut Ui, forward: bool) {

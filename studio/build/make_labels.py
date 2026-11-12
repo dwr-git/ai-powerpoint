@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Russian names for the assistant's command search.
 
-Reads AI-PowerPoint's interface catalog (crates/ui-egui/i18n/ru.tsv: `English <TAB> Russian`) and
+Reads AI Презентации's interface catalog (crates/ui-egui/i18n/ru.tsv: `English <TAB> Russian`) and
 writes studio/ru-labels.json:
 
     {"text": {"New Slide": "Создать слайд", ...}, "id": {}}

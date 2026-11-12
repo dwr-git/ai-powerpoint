@@ -97,7 +97,7 @@ pub enum PhType {
 /// Whether empty placeholders prompt in Russian ([`set_russian_prompts`]).
 static RUSSIAN_PROMPTS: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
 
-/// Prompt in empty placeholders in Russian (`true`) or English (AI-PowerPoint's interface language).
+/// Prompt in empty placeholders in Russian (`true`) or English (AI Презентации's interface language).
 pub fn set_russian_prompts(on: bool) {
     RUSSIAN_PROMPTS.store(on, std::sync::atomic::Ordering::Relaxed);
 }
@@ -167,7 +167,7 @@ impl PhType {
             PhType::SlideImage => "",
         }
     }
-    /// [`PhType::prompt`] in Russian (AI-PowerPoint's interface language).
+    /// [`PhType::prompt`] in Russian (AI Презентации's interface language).
     fn prompt_ru(self) -> &'static str {
         match self {
             PhType::Title | PhType::CtrTitle => "Щёлкните, чтобы добавить заголовок",

@@ -17,7 +17,7 @@
 //! sample deck instead of a blank presentation; `?show` starts the slide show; `?lang=en` shows
 //! the English interface.
 //!
-//! AI-PowerPoint: `window.aipowerpoint` (web/bridge.rs) lets the page's assistant panel drive the
+//! AI Презентации: `window.aipowerpoint` (web/bridge.rs) lets the page's assistant panel drive the
 //! app; Save goes to the page, which keeps it in the user's files on the server.
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 #![forbid(unsafe_code)]

@@ -306,7 +306,7 @@ icons! {
     Collapse => "collapse",
     Expand => "expand",
     Pin => "pin",
-    /// The way back to the site the web editor lives on (AI-PowerPoint).
+    /// The way back to the site the web editor lives on (AI Презентации).
     House => "house",
     // File tab (Backstage)
     BackCircle => "back-circle",

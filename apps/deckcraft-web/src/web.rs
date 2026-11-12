@@ -48,7 +48,7 @@ pub fn start() {
                     let (requests, control) = std::sync::mpsc::channel();
                     bridge::connect(requests, cc.egui_ctx.clone());
                     let mut app = SlideApp::new(Session::new(), services(inbox.clone(), cc.egui_ctx.clone())).with_control(control);
-                    // AI-PowerPoint: the Russian interface and the Brand theme (Light and Dark stay in
+                    // AI Презентации: the Russian interface and the Brand theme (Light and Dark stay in
                     // File › Account and the assistant panel's theme menu; the choice is remembered).
                     let russian = !query().contains("lang=en");
                     deckcraft_ui_egui::i18n::set_russian(russian);
@@ -77,7 +77,7 @@ pub fn start() {
             match result {
                 Ok(()) => el.remove(),
                 Err(e) => el.set_inner_html(&format!(
-                    "<p>AI-PowerPoint не запустился: {}</p><p>Нужен браузер с WebGPU или WebGL2: свежий Chrome, Edge, Firefox или Safari.</p>",
+                    "<p>AI Презентации не запустился: {}</p><p>Нужен браузер с WebGPU или WebGL2: свежий Chrome, Edge, Firefox или Safari.</p>",
                     format!("{e:?}").replace('&', "&amp;").replace('<', "&lt;")
                 )),
             }

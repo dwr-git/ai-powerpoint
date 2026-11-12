@@ -515,7 +515,7 @@ fn media_frames(app: &SlideApp, painter: &egui::Painter, xf: Xf) {
 
 /// The play/pause and timeline bar under a selected audio or video (PowerPoint shows it on
 /// selection or hover).
-/// Width and height of the AI chip beside the selection (AI-PowerPoint on the web).
+/// Width and height of the AI chip beside the selection (AI Презентации on the web).
 const AI_CHIP_W: f32 = 58.0;
 const AI_CHIP_H: f32 = 26.0;
 
@@ -1405,7 +1405,7 @@ fn context_menu(app: &mut SlideApp, resp: &egui::Response) {
             }
             ui.separator();
         }
-        // AI-PowerPoint on the web: the AI menu for the selected text or shapes (or the slide).
+        // AI Презентации on the web: the AI menu for the selected text or shapes (or the slide).
         if app.services.ai_assist.is_some() {
             let label = egui::RichText::new(tl!("AI Assistant…")).strong();
             if ui.button(label).on_hover_text(tl!("AI Assistant: improve, shorten, translate, speaker notes")).clicked() {

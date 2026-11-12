@@ -1,9 +1,9 @@
-# Русский (ru) interface catalog for AI-PowerPoint (crates/ui-egui/src/i18n.rs).
+# Русский (ru) interface catalog for AI Презентации (crates/ui-egui/src/i18n.rs).
 # Columns, separated by a TAB:  English source text <TAB> translation. Escapes: \n \t \\.
 # `{name}` placeholders appear in both columns; a trailing "…" in one needs one in the other.
 #
 # Rows whose English matches a row of storytold/craft-i18n (locales/ru, rev 04600cb, MIT OR
-# Apache-2.0, same authors' project) were taken from it; the others were written for AI-PowerPoint
+# Apache-2.0, same authors' project) were taken from it; the others were written for AI Презентации
 # from the plain meaning of the English text. No other product's localisation was consulted.
  (not checked)	 (не проверяется)
  — Edited	 — изменено
@@ -33,16 +33,16 @@ AI	ИИ
 AI Assistant	ИИ-помощник
 AI Assistant: improve, shorten, translate, speaker notes	ИИ-помощник: улучшить, сократить, перевести, заметки докладчика
 AI Assistant…	ИИ-помощник…
-AI-PowerPoint can't export “{other}”	AI-PowerPoint не умеет экспортировать «{other}»
-AI-PowerPoint can't find “{text}”.	AI-PowerPoint не нашёл «{text}».
-AI-PowerPoint has no accounts of its own: your presentations stay in your files.	У AI-PowerPoint нет своих учётных записей: презентации хранятся в ваших файлах.
-AI-PowerPoint prints through a PDF: it downloads, ready to print from your browser or PDF viewer.	AI-PowerPoint печатает через PDF: файл скачивается, и его можно напечатать из браузера или программы просмотра PDF.
-AI-PowerPoint prints through a PDF: it opens in your PDF viewer, where you choose the printer.	AI-PowerPoint печатает через PDF: файл откроется в программе просмотра PDF, там и выбирается принтер.
+AI Презентации can't export “{other}”	AI Презентации не умеет экспортировать «{other}»
+AI Презентации can't find “{text}”.	AI Презентации не нашёл «{text}».
+AI Презентации has no accounts of its own: your presentations stay in your files.	У AI Презентации нет своих учётных записей: презентации хранятся в ваших файлах.
+AI Презентации prints through a PDF: it downloads, ready to print from your browser or PDF viewer.	AI Презентации печатает через PDF: файл скачивается, и его можно напечатать из браузера или программы просмотра PDF.
+AI Презентации prints through a PDF: it opens in your PDF viewer, where you choose the printer.	AI Презентации печатает через PDF: файл откроется в программе просмотра PDF, там и выбирается принтер.
 ALL pictures black and white	ВСЕ рисунки чёрно-белые
 AaBbCcDd	АаБбВвГг
 Abc	Абв
 About	О программе
-About AI-PowerPoint	О программе AI-PowerPoint
+About AI Презентации	О программе AI Презентации
 Accent 1	Акцент 1
 Accent 2	Акцент 2
 Accent 3	Акцент 3
@@ -163,6 +163,7 @@ Backspace	Backspace
 Banded Columns	Чередующиеся столбцы
 Banded Rows	Чередующиеся строки
 Based on DeckCraft by the ArtCraft team (github.com/storytold/slidecraft)	Основан на DeckCraft от команды ArtCraft (github.com/storytold/slidecraft)
+PowerPoint is a trademark of Microsoft Corporation. AI Презентации is not affiliated with Microsoft and works with files in its formats.	PowerPoint — товарный знак корпорации Microsoft. AI Презентации не связаны с Microsoft и работает с файлами в её форматах.
 Baseline	Базовая линия
 Basic Cycle	Простой цикл
 Basic List	Простой список
@@ -704,7 +705,7 @@ Loop forever	Повторять бесконечно
 Loop until Stopped	Непрерывно
 Loose	Свободно
 Low	Низкая
-MIT OR Apache-2.0 · © 2026 ArtCraft Team, the DeckCraft and AI-PowerPoint contributors	MIT OR Apache-2.0 · © 2026 команда ArtCraft, авторы DeckCraft и AI-PowerPoint
+MIT OR Apache-2.0 · © 2026 ArtCraft Team, the DeckCraft and AI Презентации contributors	MIT OR Apache-2.0 · © 2026 команда ArtCraft, авторы DeckCraft и AI Презентации
 Manage Presentation	Управление презентацией
 Margins (pt)	Поля (пт)
 Mark as decorative	Пометить как декоративный
@@ -933,7 +934,7 @@ Presentations and slide shows, rebuilt from scratch in pure Rust.	Презент
 Presentations you open show up here. Use Open to browse for one.	Здесь появятся открытые вами презентации. Чтобы найти презентацию, нажмите «Открыть».
 Presented by a speaker (full screen)	Управляемый докладчиком (во весь экран)
 Presenter View	Режим докладчика
-Presenter View — AI-PowerPoint	Режим докладчика — AI-PowerPoint
+Presenter View — AI Презентации	Режим докладчика — AI Презентации
 Preserve	Сохранить
 Preset gradients	Готовые градиенты
 Presets	Наборы

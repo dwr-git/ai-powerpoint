@@ -459,7 +459,7 @@ pub struct Session {
     pub tool: tools::ToolState,
     pub(crate) untitled: u32,
     /// What new untitled presentations are called before their number (`Presentation1`); the
-    /// interface sets it in its own language (AI-PowerPoint: `Презентация1`).
+    /// interface sets it in its own language (AI Презентации: `Презентация1`).
     pub untitled_stem: String,
     /// Format Painter: copied shape/text formatting and whether it stays on (double-click).
     pub painter: Option<(cmd::format::Painted, bool)>,

@@ -193,7 +193,7 @@ fn command_for(purpose: FilePurpose, name: &str, bytes: &[u8]) -> Result<&'stati
         FilePurpose::Open => open_command(name),
         FilePurpose::Infer => infer_command(name, bytes),
     };
-    cmd.ok_or_else(|| format!("{name}: AI-PowerPoint can't open this kind of file"))
+    cmd.ok_or_else(|| format!("{name}: AI Презентации can't open this kind of file"))
 }
 
 /// How long a transient status message stays visible.
@@ -222,15 +222,15 @@ pub struct Services {
     pub clipboard_set_html: Option<Box<dyn FnMut(&str, &str) -> bool>>,
     /// Audio output for media playback (cpal on desktop); without one media plays silently.
     pub audio_out: Option<Box<dyn deckcraft_media::AudioOut>>,
-    /// Web (AI-PowerPoint): hand a Save or Save As to the page, which keeps the file in the user's
+    /// Web (AI Презентации): hand a Save or Save As to the page, which keeps the file in the user's
     /// files on the server, instead of downloading it: (file name, the presentation's path, the
     /// bytes, whether a new name was asked for — Save As). `Ok(true)` when the page took it;
     /// `Ok(false)` downloads as usual.
     pub save_to_page: Option<Box<dyn Fn(&str, Option<&str>, &[u8], bool) -> Result<bool, String>>>,
-    /// Web (AI-PowerPoint): leave the editor for the site it lives on. The title bar shows a house
+    /// Web (AI Презентации): leave the editor for the site it lives on. The title bar shows a house
     /// at its right end when set.
     pub go_home: Option<Box<dyn Fn()>>,
-    /// Web (AI-PowerPoint): open the page's AI menu for the selected text or shapes at this point
+    /// Web (AI Презентации): open the page's AI menu for the selected text or shapes at this point
     /// of the window (egui points). The slide's context menu offers "AI Assistant…" and the
     /// selected text an AI chip when set.
     pub ai_assist: Option<Box<dyn Fn(f32, f32)>>,
@@ -415,7 +415,7 @@ pub const UI_COMMANDS: &[(&str, &str, Option<&str>, &str)] = &[
         Some("Cmd+P"),
         "{layout?, perPage?, slides?, includeHidden?, frame?, paper?: letter|a4|legal|a3, orientation?: portrait|landscape}",
     ),
-    ("app.about", "About AI-PowerPoint", None, "{}"),
+    ("app.about", "About AI Презентации", None, "{}"),
     ("app.palette", "Command Palette", Some("Cmd+Shift+P"), "{}"),
     ("app.preferences", "Preferences…", Some("Cmd+,"), "{}"),
     ("app.openDialog", "Open…", None, "{purpose?}"),
@@ -685,7 +685,7 @@ impl SlideApp {
     /// Run a command by id (UI commands here, everything else in the engine). Errors show in the
     /// status bar and are returned.
     pub fn run(&mut self, id: &str, params: Value) -> Result<Value, String> {
-        // AI-PowerPoint on the web: Save and Save As without a path go to the page's files.
+        // AI Презентации on the web: Save and Save As without a path go to the page's files.
         if matches!(id, "file.save" | "file.saveAs")
             && params.get("path").is_none()
             && self.services.pick_save.is_none()
@@ -794,7 +794,7 @@ impl SlideApp {
             "deckcraft" => ("deckcraft", "deckcraft", false),
             "gif" => ("gif", "gif", false),
             other => {
-                self.set_status(format!("AI-PowerPoint can't export “{other}”"));
+                self.set_status(format!("AI Презентации can't export “{other}”"));
                 return false;
             }
         };
@@ -1002,7 +1002,7 @@ impl SlideApp {
                 return Ok(json!({"started": self.export_as(&format, p.clone())}));
             }
             "app.rename" => {
-                // The page stored the presentation under this name (AI-PowerPoint's files).
+                // The page stored the presentation under this name (AI Презентации's files).
                 let name = p.get("name").and_then(Value::as_str).map(str::trim).filter(|n| !n.is_empty()).ok_or("missing `name`")?;
                 let stem: String = name.trim_end_matches(".pptx").trim_end_matches(".deckcraft").chars().take(200).collect();
                 let d = self.session.active_mut().ok_or("no presentation open")?;
@@ -1144,7 +1144,7 @@ impl SlideApp {
             }
             "app.links" => {
                 use deckcraft_engine::links::*;
-                // AI-PowerPoint has no community links; only where it comes from.
+                // AI Презентации has no community links; only where it comes from.
                 return Ok(json!({"upstream": GITHUB}));
             }
             _ => return Err(format!("unknown UI command `{id}`")),
@@ -1408,7 +1408,7 @@ impl SlideApp {
     }
 
     /// Save As (`named`) or the first Save of an untitled presentation. On the web with a page
-    /// that keeps saves (AI-PowerPoint), the bytes go to the page, which stores them in the user's
+    /// that keeps saves (AI Презентации), the bytes go to the page, which stores them in the user's
     /// files on the server; otherwise they download.
     fn save_as_named(&mut self, format: &str, named: bool) {
         if self.services.pick_save.is_none() && self.save_to_page(format, named) {
@@ -1459,7 +1459,7 @@ impl SlideApp {
                 Err(e) => self.set_status(e.to_string()),
             }
         } else if self.pick_save_missing() && self.save_to_page("pptx", false) {
-            // AI-PowerPoint: Save hands the presentation, as PowerPoint .pptx, to the page.
+            // AI Презентации: Save hands the presentation, as PowerPoint .pptx, to the page.
         } else {
             self.save_as_dialog("deckcraft");
         }

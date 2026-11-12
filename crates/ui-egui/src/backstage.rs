@@ -11,7 +11,7 @@
 //! Laid out after PowerPoint for Windows (observed black-box): a 160-point side menu darker than
 //! the page, 40-point entries with an outline icon, the current page in the accent colour.
 
-/// Where AI-PowerPoint comes from (the File view and About).
+/// Where AI Презентации comes from (the File view and About).
 pub const UPSTREAM: &str = "Based on DeckCraft by the ArtCraft team (github.com/storytold/slidecraft)";
 
 use egui::{Align2, Color32, CornerRadius, Key, Rect, RichText, Sense, Stroke, StrokeKind, Ui, pos2, vec2};
@@ -707,7 +707,7 @@ fn home(app: &mut SlideApp, ui: &mut Ui, bs: &mut Backstage, out: &mut Outcome) 
     ui.horizontal(|ui| {
         let (r, _) = ui.allocate_exact_size(vec2(36.0, 36.0), Sense::hover());
         crate::dialogs::paint_logo(ui.painter(), r);
-        ui.label(RichText::new("AI-PowerPoint").font(theme::bold(24.0)).color(t.text));
+        ui.label(RichText::new("AI Презентации").font(theme::bold(24.0)).color(t.text));
     });
     ui.add_space(18.0);
     ui.horizontal(|ui| {
@@ -1054,9 +1054,9 @@ fn print(app: &mut SlideApp, ui: &mut Ui, bs: &mut Backstage) {
             dim(
                 ui,
                 if app.services.pick_save.is_some() {
-                    "AI-PowerPoint prints through a PDF: it opens in your PDF viewer, where you choose the printer."
+                    "AI Презентации prints through a PDF: it opens in your PDF viewer, where you choose the printer."
                 } else {
-                    "AI-PowerPoint prints through a PDF: it downloads, ready to print from your browser or PDF viewer."
+                    "AI Презентации prints through a PDF: it downloads, ready to print from your browser or PDF viewer."
                 },
             );
             ui.add_space(14.0);
@@ -1370,7 +1370,7 @@ fn account(app: &mut SlideApp, ui: &mut Ui) {
             });
             ui.add_space(16.0);
             heading(ui, "User Information");
-            dim(ui, "AI-PowerPoint has no accounts of its own: your presentations stay in your files.");
+            dim(ui, "AI Презентации has no accounts of its own: your presentations stay in your files.");
         });
         ui.add_space(40.0);
         ui.vertical(|ui| {
@@ -1378,7 +1378,7 @@ fn account(app: &mut SlideApp, ui: &mut Ui) {
             ui.horizontal(|ui| {
                 let (r, _) = ui.allocate_exact_size(vec2(40.0, 40.0), Sense::hover());
                 crate::dialogs::paint_logo(ui.painter(), r);
-                ui.label(RichText::new("AI-PowerPoint").font(theme::bold(24.0)).color(t.text));
+                ui.label(RichText::new("AI Презентации").font(theme::bold(24.0)).color(t.text));
             });
             dim(ui, &crate::dialogs::version_line());
             dim(ui, "Open source under MIT OR Apache-2.0. Not affiliated with Microsoft.");
@@ -1386,8 +1386,8 @@ fn account(app: &mut SlideApp, ui: &mut Ui) {
             if task(
                 ui,
                 Icon::Help,
-                "About AI-PowerPoint",
-                "About AI-PowerPoint",
+                "About AI Презентации",
+                "About AI Презентации",
                 "The version, the people and models who built it, and where to find us.",
                 true,
             ) {

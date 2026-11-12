@@ -1,5 +1,5 @@
 <?php
-// studio/api/files.php — файлы AI-PowerPoint на вашем сервере. У каждого пользователя своя папка.
+// studio/api/files.php — файлы AI Презентации на вашем сервере. У каждого пользователя своя папка.
 //
 //   GET  files.php                          → {ok, user, files: [{name, size, modified}], limit}
 //   GET  files.php?action=load&name=…       → сама презентация (.pptx, .ppt, .odp…), application/octet-stream
@@ -11,7 +11,7 @@
 //
 // Шрифты организации: папка fonts рядом с папками пользователей (storage/ai-powerpoint/fonts). Положите
 // туда шрифты, на которые у организации есть лицензия (например, Times New Roman, Arial, Calibri из
-// Windows): AI-PowerPoint будет показывать ими слайды у всех пользователей, и презентации совпадут с PowerPoint.
+// Windows): AI Презентации будет показывать ими слайды у всех пользователей, и презентации совпадут с PowerPoint.
 //
 // Где лежат файлы: AI_POWERPOINT_DATA_DIR из .env, иначе storage/ai-powerpoint рядом с корнем сайта
 // (/app/storage/ai-powerpoint при корне /app/src — вне корня, nginx её не отдаёт; создаётся сама),
@@ -134,7 +134,7 @@ function fonts_dir(string $root): string
         @mkdir($dir, 0770, true);
         @file_put_contents("$dir/README.txt", "Положите сюда шрифты, на которые у организации есть лицензия (.ttf, .otf),\n"
             . "например Times New Roman, Arial, Calibri из папки C:\\Windows\\Fonts.\n"
-            . "AI-PowerPoint загрузит их у всех пользователей, и слайды будут показаны теми же шрифтами, что в PowerPoint.\n");
+            . "AI Презентации загрузит их у всех пользователей, и слайды будут показаны теми же шрифтами, что в PowerPoint.\n");
     }
     return $dir;
 }

@@ -3,7 +3,7 @@
 use egui::{Color32, CornerRadius, FontData, FontDefinitions, FontFamily, Stroke, Visuals};
 use serde::{Deserialize, Serialize};
 
-/// The interface theme. AI-PowerPoint starts in `Brand` (navy chrome, the brand's blue-violet
+/// The interface theme. AI Презентации starts in `Brand` (navy chrome, the brand's blue-violet
 /// accent, solid black menus and windows, the brand backdrop round the slide); `Light` and `Dark`
 /// are the neumorphic panel palettes. Slides stay as the presentation draws them in every theme.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]

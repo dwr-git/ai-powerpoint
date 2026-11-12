@@ -289,7 +289,7 @@ pub fn menu_tree() -> Vec<(&'static str, Vec<(&'static str, &'static str)>)> {
                 ("Set Up Show…", "show.setup"),
             ],
         ),
-        ("Help", vec![("About AI-PowerPoint", "app.about"), ("Command Palette", "app.palette")]),
+        ("Help", vec![("About AI Презентации", "app.about"), ("Command Palette", "app.palette")]),
     ]
 }
 

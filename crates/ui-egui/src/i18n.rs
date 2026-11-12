@@ -1,6 +1,6 @@
-//! The Russian interface (AI-PowerPoint).
+//! The Russian interface (AI Презентации).
 //!
-//! DeckCraft's interface text is English literals. AI-PowerPoint shows it in Russian through one
+//! DeckCraft's interface text is English literals. AI Презентации shows it in Russian through one
 //! catalog, `crates/ui-egui/i18n/ru.tsv` (`English <TAB> Russian`, the craft-i18n row format without
 //! the context column), looked up by the English text where it is drawn: the ribbon's buttons and
 //! tabs, menus, dialogs, panes, the File view and the status bar. A string with no row shows in

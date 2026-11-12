@@ -48,7 +48,7 @@ fn title(id: &str) -> &'static str {
         "paragraph" => "Paragraph",
         "tabs" => "Tabs",
         "font" => "Font",
-        "about" => "About AI-PowerPoint",
+        "about" => "About AI Презентации",
         "preferences" => "Preferences",
         "autocorrect" => "AutoCorrect",
         "gridOptions" => "Grid Options",
@@ -69,10 +69,10 @@ fn title(id: &str) -> &'static str {
         "smartart" => "Choose a SmartArt Graphic",
         "bullets" => "Bullets and Numbering",
         "action" => "Action Settings",
-        "quit" => "AI-PowerPoint",
+        "quit" => "AI Презентации",
         "themeColors" => "Create New Theme Colors",
         "themeFonts" => "Create New Theme Fonts",
-        _ => "AI-PowerPoint",
+        _ => "AI Презентации",
     }
 }
 
@@ -2709,15 +2709,16 @@ pub fn about(_app: &mut SlideApp, ui: &mut Ui) {
     ui.vertical_centered(|ui| {
         let (r, _) = ui.allocate_exact_size(vec2(64.0, 64.0), Sense::hover());
         paint_logo(ui.painter(), r);
-        ui.label(egui::RichText::new("AI-PowerPoint").font(theme::bold(22.0)));
+        ui.label(egui::RichText::new("AI Презентации").font(theme::bold(22.0)));
         ui.label(egui::RichText::new(version_line()).color(t.text_dim));
         ui.add_space(6.0);
         ui.label(tl!("Presentations and slide shows, rebuilt from scratch in pure Rust."));
         ui.label(tl!("An open-source, clean-room project. Not affiliated with Microsoft."));
         ui.add_space(6.0);
         ui.label(tl!(crate::backstage::UPSTREAM));
+        ui.label(tl!("PowerPoint is a trademark of Microsoft Corporation. AI Презентации is not affiliated with Microsoft and works with files in its formats."));
         ui.add_space(6.0);
-        ui.label(egui::RichText::new(tl!("MIT OR Apache-2.0 · © 2026 ArtCraft Team, the DeckCraft and AI-PowerPoint contributors")).size(11.0).color(t.text_faint));
+        ui.label(egui::RichText::new(tl!("MIT OR Apache-2.0 · © 2026 ArtCraft Team, the DeckCraft and AI Презентации contributors")).size(11.0).color(t.text_faint));
     });
 }
 
@@ -3327,7 +3328,7 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
                 p["with"] = json!(d.get("with", ""));
                 let msg = match app.session.execute("text.replace", &p) {
                     Ok(v) => format!("Replaced {} occurrence(s).", v.get("replaced").and_then(Value::as_u64).unwrap_or(0)),
-                    Err(_) => crate::i18n::fmt("AI-PowerPoint can't find “{text}”.", &[("text", &text)]),
+                    Err(_) => crate::i18n::fmt("AI Презентации can't find “{text}”.", &[("text", &text)]),
                 };
                 d.fields.insert("status".into(), msg);
                 d.fields.remove("cur");
@@ -3342,7 +3343,7 @@ fn find_dialog(app: &mut SlideApp, ui: &mut Ui, d: &mut Dialog) -> bool {
     if find_next {
         let list = app.session.execute("text.find", &q).ok().and_then(|v| v.as_array().cloned()).unwrap_or_default();
         if list.is_empty() {
-            d.fields.insert("status".into(), crate::i18n::fmt("AI-PowerPoint can't find “{text}”.", &[("text", &text)]));
+            d.fields.insert("status".into(), crate::i18n::fmt("AI Презентации can't find “{text}”.", &[("text", &text)]));
             d.fields.remove("cur");
         } else {
             let n = d.get("next", "0").parse::<usize>().unwrap_or(0) % list.len();

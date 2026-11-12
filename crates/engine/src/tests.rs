@@ -4725,7 +4725,7 @@ fn slide_hide_and_layout_reject_invalid_index() {
     assert!(s.doc().unwrap().doc.slides.iter().all(|x| !x.hidden));
 }
 
-/// AI-PowerPoint's AI menu reads the selected text, else the selected shapes', else the slide's,
+/// AI Презентации's AI menu reads the selected text, else the selected shapes', else the slide's,
 /// and the whole presentation as plain text for context.
 #[test]
 fn selected_text_and_presentation_text_for_the_ai_menu() {
